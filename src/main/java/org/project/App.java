@@ -11,6 +11,7 @@ public class App
 {
     public static void main( String[] args )
     {
+        //Arraylist Initialization
         ArrayList<Staff> staff_list = new ArrayList<>();
 
         staff_list.add(new Staff(0, "Tanya","Martin", 10.8, 20, "tm@gmail.com"));
@@ -22,14 +23,15 @@ public class App
         staff_list.add(new Staff(6, "John","Stewart", 11.8, 30, "jost@gmail.com"));
         staff_list.add(new Staff(7, "Jake","Cheruil", 11.8, 20, "jach@gmail.com"));
         staff_list.add(new Staff(8, "Patrick","Donchev", 10.8, 40, "patryck@gmail.com"));
-        staff_list.add(new Staff(9, "Hayley","Dixon", 11.8, 30, "hayleydixon@gmail.com"));
+        staff_list.add(new Staff(9, "Hayley","Dixon", 11.8, 30, "hd@gmail.com"));
         staff_list.add(new Staff(10, "Ira","Thete", 10.8, 20, "it@gmail.com"));
 
 
+        //Main Menu
         final String MENU_ITEMS = "\n*** MAIN MENU ***\n"
                 + "1. Display All Staff\n"
                 + "2. Retrieve a Staff object by key from HashMap\n"
-                + "3. Display Staff-Station from TreeMap\n"
+                + "3. Display Staff-Station from TreeMap in order of Staff_First_Name\n"
                 + "4. Exit\n"
                 + "Enter Option [1,4]";
 
@@ -56,10 +58,11 @@ public class App
                         displayStaff(staff_list);
                         break;
                     case HASH_RETRIEVE:
+                        System.out.println("Hash Map Retrieve option chosen");
                         hashRetrieve(staff_list);
                         break;
                     case TREE_RETRIEVE:
-                        System.out.println("Bookings option chosen");
+                        System.out.println("Display using TreeMap option chosen");
                         treeRetrieve(staff_list);
                         break;
                     case EXIT:
@@ -76,10 +79,11 @@ public class App
             }
         } while (option != EXIT);
 
-        System.out.println("\nExiting Main Menu, goodbye.");
+        System.out.println("\nExiting Main Menu, Thank you!.");
 
     }
 
+    //Feature1
     public static void displayStaff(ArrayList<Staff> staffArrayList) {
         System.out.printf("%5s\t%-15s\t%-15s\t%-2s\t%5s %15s\n","ID","First_Name","Last_Name","Rate_Per_Hour","Work_Hours","Email");
 
@@ -88,7 +92,7 @@ public class App
         }
     }
 
-
+    //Feature 2
     public static void hashRetrieve(ArrayList<Staff> staffArrayList) {
         Scanner sc = new Scanner(System.in);
         Map<Integer, Staff> map = new HashMap<>();
@@ -96,6 +100,7 @@ public class App
             map.put(s.getStaff_id(),s);
         }
 
+        // Display all possible options to user
         Set<Integer> keySet = map.keySet();  // get all keys
         System.out.println("Choose from Staff IDs:");
         for (Integer id : keySet) {
@@ -116,7 +121,9 @@ public class App
 
     }
 
+    //Feature 3
     public static void treeRetrieve(ArrayList<Staff> staffArrayList){
+        //Station objects
         Station s1 = new Station(1,"Baking");
         Station s2 = new Station(2,"Deserts");
         Station s3 = new Station(3,"Kneading");
@@ -138,12 +145,12 @@ public class App
         }
 
         System.out.println("\nTreeMap: [ Staff -> Station ] in Order of Staff First Name\n");
+
         // for each Entry in the set of all entries
-        System.out.printf("%-15s\t%-15s\t%40s\n","First_Name","Last_Name","Station");
         for (Map.Entry<Staff, Station> entry : stationMap.entrySet()) {
             Staff staff = entry.getKey();
             Station station = entry.getValue();
-            System.out.printf("%-15s\t%-15s\t%40s\n",staff.getFirst_name(),staff.getLast_name(),station);
+            System.out.println("{"+staff+"} -> "+station);
         }
 
     }

@@ -86,13 +86,6 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff{" +
-                "staff_id=" + staff_id +
-                ", first_name='" + first_name + '\'' +
-                ", rate_per_hour=" + rate_per_hour +
-                ", last_name='" + last_name + '\'' +
-                ", work_hours=" + work_hours +
-                ", email='" + email + '\'' +
-                '}';
+        return String.format("Staff_ID:%5d\tFirst_Name:%-15s\tLast_Name:%-15s\tEmail:%-15s\tWork_Hours:%5d\tPay_Rate:%2.2f",this.staff_id,this.first_name,this.last_name,this.email,this.work_hours,this.rate_per_hour);
     }
 }

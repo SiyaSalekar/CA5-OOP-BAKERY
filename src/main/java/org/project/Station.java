@@ -10,10 +10,7 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station{" +
-                "station_id=" + station_id +
-                ", station_name='" + station_name + '\'' +
-                '}';
+        return String.format("{Station_ID:%-5d\tStation_Name:%5s}",this.station_id,this.station_name);
     }
 
     public void setStation_id(int station_id) {

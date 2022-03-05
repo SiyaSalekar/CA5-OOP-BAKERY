@@ -1,9 +1,7 @@
 package org.project;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Hello world!
@@ -39,6 +37,7 @@ public class App
         final int HASH_RETRIEVE = 2;
         final int TREE_RETRIEVE = 3;
         final int EXIT = 4;
+        Scanner sc = new Scanner(System.in);
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -52,12 +51,14 @@ public class App
                 switch (option)
                 {
                     case DISPLAY:
-                        System.out.println("Passengers option chosen");
+                        System.out.println("All Staff");
+                        System.out.println();
                         displayStaff(staff_list);
                         break;
                     case HASH_RETRIEVE:
-                        System.out.println("Vehicles option chosen");
-                        //hashRetrieve();
+                        System.out.println("Enter Staff ID");
+                        int key = sc.nextInt();
+                        hashRetrieve(key, staff_list);
                         break;
                     case TREE_RETRIEVE:
                         System.out.println("Bookings option chosen");
@@ -88,4 +89,13 @@ public class App
             System.out.printf("%5d\t%-15s\t%-15s\t%-2.2f\t%10d\t\t\t\t\t%-20s\n",s.getStaff_id(),s.getFirst_name(),s.getLast_name(),s.getRate_per_hour(),s.getWork_hours(),s.getEmail());
         }
     }
+
+    public static void hashRetrieve(int key, ArrayList<Staff> staffArrayList) {
+        Map<Integer, Staff> map = new HashMap<>();
+        for(Staff s: staffArrayList){
+            map.put(s.getStaff_id(),s);
+        }
+
+    }
+
 }

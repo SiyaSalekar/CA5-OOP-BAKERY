@@ -56,9 +56,15 @@ public class App
                         displayStaff(staff_list);
                         break;
                     case HASH_RETRIEVE:
+                        System.out.println("Press Enter");
+                        sc.nextLine(); //flush the scanner
+                        try{
                         System.out.println("Enter Staff ID");
                         int key = sc.nextInt();
                         hashRetrieve(key, staff_list);
+                        }catch (InputMismatchException e){
+                            System.out.println("Id is not a Number");
+                        }
                         break;
                     case TREE_RETRIEVE:
                         System.out.println("Bookings option chosen");
@@ -95,12 +101,11 @@ public class App
         for(Staff s: staffArrayList){
             map.put(s.getStaff_id(),s);
         }
-        Staff s1 = map.get(key);
-        if(s1!=null){
-            System.out.println(s1);
-        }
-        else{
-            System.out.println("Object with key "+key+" doesn't exist");
+
+        if(map.containsKey(key)){
+            System.out.println("Object with key " + key + " - " + map.get(key));
+        } else {
+            System.out.println("Staff Object with key " + key+" is NOT found.");
         }
     }
 

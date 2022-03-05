@@ -82,9 +82,10 @@ public class App
     }
 
     public static void displayStaff(ArrayList<Staff> staffArrayList) {
+        System.out.printf("%5s\t%-15s\t%-15s\t%-2s\t%5s %15s\n","ID","First_Name","Last_Name","Rate_Per_Hour","Work_Hours","Email");
 
         for (Staff s : staffArrayList) {
-
+            System.out.printf("%5d\t%-15s\t%-15s\t%-2.2f\t%10d\t\t\t\t\t%-20s\n",s.getStaff_id(),s.getFirst_name(),s.getLast_name(),s.getRate_per_hour(),s.getWork_hours(),s.getEmail());
         }
     }
 }

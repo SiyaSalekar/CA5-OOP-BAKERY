@@ -29,7 +29,7 @@ public class App
         final String MENU_ITEMS = "\n*** MAIN MENU ***\n"
                 + "1. Display All Staff\n"
                 + "2. Retrieve a Staff object by key from HashMap\n"
-                + "3. Retrieve a Staff object by key from TreeMap\n"
+                + "3. Display Staff-Station from TreeMap\n"
                 + "4. Exit\n"
                 + "Enter Option [1,4]";
 
@@ -60,7 +60,7 @@ public class App
                         break;
                     case TREE_RETRIEVE:
                         System.out.println("Bookings option chosen");
-                        treeRetrieve();
+                        treeRetrieve(staff_list);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -116,11 +116,35 @@ public class App
 
     }
 
-    public static void treeRetrieve(){
+    public static void treeRetrieve(ArrayList<Staff> staffArrayList){
         Station s1 = new Station(1,"Baking");
         Station s2 = new Station(2,"Deserts");
         Station s3 = new Station(3,"Kneading");
 
+        Map<Staff, Station> stationMap = new TreeMap<>(new StaffFirstNameComparator());
+
+        // filling values in treeMap as per work hours just to avoid tedious hard coding
+
+        for(Staff s: staffArrayList){
+            if(s.getWork_hours()==20){
+                stationMap.put(s, s1);
+            }
+            else if(s.getWork_hours()==20){
+                stationMap.put(s,s2);
+            }
+            else{
+                stationMap.put(s,s3);
+            }
+        }
+
+        System.out.println("\nTreeMap: [ Staff -> Station ] in Order of Staff First Name\n");
+        // for each Entry in the set of all entries
+        System.out.printf("%-15s\t%-15s\t%40s\n","First_Name","Last_Name","Station");
+        for (Map.Entry<Staff, Station> entry : stationMap.entrySet()) {
+            Staff staff = entry.getKey();
+            Station station = entry.getValue();
+            System.out.printf("%-15s\t%-15s\t%40s\n",staff.getFirst_name(),staff.getLast_name(),station);
+        }
 
     }
 

@@ -37,7 +37,7 @@ public class App
         final int HASH_RETRIEVE = 2;
         final int TREE_RETRIEVE = 3;
         final int EXIT = 4;
-        Scanner sc = new Scanner(System.in);
+
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -56,15 +56,7 @@ public class App
                         displayStaff(staff_list);
                         break;
                     case HASH_RETRIEVE:
-                        System.out.println("Press Enter");
-                        sc.nextLine(); //flush the scanner
-                        try{
-                        System.out.println("Enter Staff ID");
-                        int key = sc.nextInt();
-                        hashRetrieve(key, staff_list);
-                        }catch (InputMismatchException e){
-                            System.out.println("Id is not a Number");
-                        }
+                        hashRetrieve(staff_list);
                         break;
                     case TREE_RETRIEVE:
                         System.out.println("Bookings option chosen");
@@ -96,17 +88,32 @@ public class App
         }
     }
 
-    public static void hashRetrieve(int key, ArrayList<Staff> staffArrayList) {
+
+    public static void hashRetrieve(ArrayList<Staff> staffArrayList) {
+        Scanner sc = new Scanner(System.in);
         Map<Integer, Staff> map = new HashMap<>();
         for(Staff s: staffArrayList){
             map.put(s.getStaff_id(),s);
         }
 
-        if(map.containsKey(key)){
-            System.out.println("Object with key " + key + " - " + map.get(key));
-        } else {
-            System.out.println("Staff Object with key " + key+" is NOT found.");
+        Set<Integer> keySet = map.keySet();  // get all keys
+        System.out.println("Choose from Staff IDs:");
+        for (Integer id : keySet) {
+            System.out.print(id + ", ");
         }
+
+        try{
+            System.out.println("\nEnter Staff ID");
+            int key = sc.nextInt();
+            if(map.containsKey(key)){
+                System.out.println("Object with key " + key + " - " + map.get(key));
+            } else {
+                System.out.println("Staff object with key " + key+" is NOT found.");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("Id is not a Number");
+        }
+
     }
 
 }

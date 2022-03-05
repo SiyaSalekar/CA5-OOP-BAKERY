@@ -95,7 +95,13 @@ public class App
         for(Staff s: staffArrayList){
             map.put(s.getStaff_id(),s);
         }
-
+        Staff s1 = map.get(key);
+        if(s1!=null){
+            System.out.println(s1);
+        }
+        else{
+            System.out.println("Object with key "+key+" doesn't exist");
+        }
     }
 
 }

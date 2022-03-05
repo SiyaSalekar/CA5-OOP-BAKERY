@@ -1,5 +1,7 @@
 package org.project;
 
+import java.util.Objects;
+
 public class Staff {
 
     private int staff_id;
@@ -9,7 +11,23 @@ public class Staff {
     private int work_hours;
     private String email;
 
-    public Staff(int staff_id, String first_name, String last_name,  double rate_per_hour ,int work_hours, String email){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Staff staff = (Staff) o;
+        return staff_id == staff.staff_id && Double.compare(staff.rate_per_hour, rate_per_hour) == 0 && work_hours == staff.work_hours && Objects.equals(first_name, staff.first_name) && Objects.equals(last_name, staff.last_name) && Objects.equals(email, staff.email);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 89 * hash + this.staff_id;
+        return hash;
+    }
+
+    public Staff(int staff_id, String first_name, String last_name, double rate_per_hour , int work_hours, String email){
         this.staff_id = staff_id;
         this.first_name = first_name;
         this.rate_per_hour = rate_per_hour;

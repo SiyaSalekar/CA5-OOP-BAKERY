@@ -60,7 +60,7 @@ public class App
                         break;
                     case TREE_RETRIEVE:
                         System.out.println("Bookings option chosen");
-                        //treeRetrieve();
+                        treeRetrieve();
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -113,6 +113,14 @@ public class App
         }catch (InputMismatchException e){
             System.out.println("Id is not a Number");
         }
+
+    }
+
+    public static void treeRetrieve(){
+        Station s1 = new Station(1,"Baking");
+        Station s2 = new Station(2,"Deserts");
+        Station s3 = new Station(3,"Kneading");
+
 
     }
 

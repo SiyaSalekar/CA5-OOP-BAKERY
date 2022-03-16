@@ -28,8 +28,29 @@ public class Staff implements Comparable<Staff>{
     }
 
     @Override
-    public int compareTo(Staff s) {
-        return s.getWork_hours() > this.getWork_hours() ? 1 : -1;
+    public int compareTo(Staff s)
+    {
+        boolean bSameFirst =
+                this.getFirst_name().equalsIgnoreCase(s.getFirst_name());
+
+        boolean bSameLast =
+                this.getLast_name().equalsIgnoreCase(s.getLast_name());
+
+        if(bSameFirst && bSameLast) // Both first and last names are the same
+        {
+            //so, compare based on Work Hours
+            return this.getWork_hours() - s.getWork_hours();
+        }
+        else if(!bSameFirst && bSameLast) //Different first, same last
+        {
+            return this.getFirst_name().compareToIgnoreCase(  // so compare on first
+                    s.getFirst_name());
+        }
+        else //All other cases
+        {
+            return this.getLast_name().compareToIgnoreCase(
+                    s.getLast_name());
+        }
     }
 
     public Staff(int staff_id, String first_name, String last_name, double rate_per_hour , int work_hours, String email){

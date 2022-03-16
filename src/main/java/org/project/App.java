@@ -26,7 +26,9 @@ public class App
         staff_list.add(new Staff(7, "Jake","Cheruil", 11.8, 20, "jach@gmail.com"));
         staff_list.add(new Staff(8, "Patrick","Donchev", 10.8, 40, "patryck@gmail.com"));
         staff_list.add(new Staff(9, "Hayley","Dixon", 11.8, 30, "hd@gmail.com"));
-        staff_list.add(new Staff(10, "Ira","Thete", 10.8, 20, "it@gmail.com"));
+        staff_list.add(new Staff(10, "Ira","Thete", 10.8, 10, "it@gmail.com"));
+        staff_list.add(new Staff(0, "Tanya","Martin", 10.8, 30, "tm@gmail.com"));
+        staff_list.add(new Staff(1, "Siya","Salekar", 11.8, 20, "ss@gmail.com"));
 
 
         //Main Menu
@@ -35,14 +37,17 @@ public class App
                 + "2. Retrieve a Staff object by key from HashMap\n"
                 + "3. Display Staff-Station from TreeMap in order of Staff_First_Name\n"
                 + "4. Priority Sequence Simulation\n"
-                + "5. Exit\n"
-                + "Enter Option [1,4]";
+                + "5. PriorityQueue Two-Field Comparison Demo\n"
+                + "6. Exit\n"
+                + "Enter Option [1,6]";
 
         final int DISPLAY = 1;
         final int HASH_RETRIEVE = 2;
         final int TREE_RETRIEVE = 3;
         final int PriorityQueueDisplay = 4;
-        final int EXIT = 5;
+        final int TwoFieldComparison = 5;
+        final int EXIT = 6;
+
 
 
         Scanner keyboard = new Scanner(System.in);
@@ -72,6 +77,9 @@ public class App
                     case PriorityQueueDisplay:
                         System.out.println("Priority Sequence Simulation - Work Hours");
                         demoWorkHoursComparator();
+                        break;
+                    case TwoFieldComparison:
+                        PriorityQueueTwoFieldComparisonDemo(staff_list);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -194,6 +202,20 @@ public class App
         }
     }
 
+    public static void PriorityQueueTwoFieldComparisonDemo(ArrayList<Staff> stafflist){
+
+
+        PriorityQueue<Staff> queue = new PriorityQueue<Staff>();
+        for(Staff s: stafflist){
+            queue.add(s);
+        }
+
+        System.out.println("Staff in priority order of Work Hours Within FistName and LastName");
+        Iterator<Staff> iterator = queue.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(queue.remove());
+        }
+    }
 
 }
 

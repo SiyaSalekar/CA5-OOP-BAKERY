@@ -1,0 +1,15 @@
+# CA5-OOP-BAKERY
+Feature 8
+
+Data Structures/Algorithm used        Operation                       Time Complexity
+
+Arraylist                             Add                             O(1)
+Arraylist                             Search                          O(n)
+HashMap                               Add-> put operation             O(1)
+HashMap                               Search-> get operation          O(1)
+Set                                   map.keySet()                    O(1)
+Merge Sort                            Comparator                      O(n log n)
+TreeMap                               Add                             O(log N)
+TreeMap                               Search/LookUp                   O(log N)
+PriorityQueue                         Insert                          O(log N)
+PriorityQueue                         Remove                          O(log N)[Feature8.txt](https://github.com/SiyaSalekar/CA5-OOP-BAKERY/files/8275454/Feature8.txt)

@@ -2,7 +2,7 @@ package org.project;
 
 import java.util.Objects;
 
-public class Staff {
+public class Staff implements Comparable<Staff>{
 
     private int staff_id;
     private String first_name;
@@ -25,6 +25,11 @@ public class Staff {
         int hash = 5;
         hash = 89 * hash + this.staff_id;
         return hash;
+    }
+
+    @Override
+    public int compareTo(Staff s) {
+        return s.getWork_hours() > this.getWork_hours() ? 1 : -1;
     }
 
     public Staff(int staff_id, String first_name, String last_name, double rate_per_hour , int work_hours, String email){

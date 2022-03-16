@@ -2,6 +2,8 @@ package org.project;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 /**
  * Hello world!
@@ -32,13 +34,15 @@ public class App
                 + "1. Display All Staff\n"
                 + "2. Retrieve a Staff object by key from HashMap\n"
                 + "3. Display Staff-Station from TreeMap in order of Staff_First_Name\n"
-                + "4. Exit\n"
+                + "4. Priority Sequence Simulation\n"
+                + "5. Exit\n"
                 + "Enter Option [1,4]";
 
         final int DISPLAY = 1;
         final int HASH_RETRIEVE = 2;
         final int TREE_RETRIEVE = 3;
-        final int EXIT = 4;
+        final int PriorityQueueDisplay = 4;
+        final int EXIT = 5;
 
 
         Scanner keyboard = new Scanner(System.in);
@@ -64,6 +68,10 @@ public class App
                     case TREE_RETRIEVE:
                         System.out.println("Display using TreeMap option chosen");
                         treeRetrieve(staff_list);
+                        break;
+                    case PriorityQueueDisplay:
+                        System.out.println("Priority Sequence Simulation - Work Hours");
+                        demoWorkHoursComparator();
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -155,4 +163,37 @@ public class App
 
     }
 
+    //Feature 4
+    private static void demoWorkHoursComparator() {
+        PriorityQueue<Staff> queue = new PriorityQueue<Staff>(
+                new StaffWorkHoursComparator(SortType.Ascending));
+
+        System.out.println();
+        System.out.println("Added two third and second priority elements");
+
+        queue.add(new Staff(2, "John","Stewart", 11.8, 30, "jost@gmail.com"));
+        queue.add(new Staff(3, "Jake","Cheruil", 11.8, 42, "jach@gmail.com"));
+        queue.add(new Staff(4, "Patrick","Donchev", 10.8, 40, "patryck@gmail.com"));
+        queue.add(new Staff(5, "Hayley","Dixon", 11.8, 35, "hd@gmail.com"));
+
+
+        System.out.println();
+        System.out.println("Remove and display one element");
+        System.out.println(queue.remove());
+
+        //Added a top priority element
+        queue.add(new Staff(1, "Aaron","McCabe", 12.8, 20, "am@gmail.com"));
+        System.out.println();
+        System.out.println("Added a top priority element");
+        System.out.println();
+        System.out.println("Display all Values in order of Work Hour Priority:");
+        //iterator & remove
+        Iterator<Staff> iterator = queue.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(queue.remove());
+        }
+    }
+
+
 }
+

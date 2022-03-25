@@ -224,6 +224,8 @@ public class App {
     }
 
     public static void DBCollection(){
+
+        StaffDAOInterface IStaffDao = new MySqlStaffDAO();
         //Sub Menu
         final String MENU_ITEM = "\n*** COLLECTIONS MENU ***\n"
                 + "1. Find All Staff\n"
@@ -249,7 +251,7 @@ public class App {
                         DBFindAllStaff();
                         break;
                     case findByID:
-                        System.out.println("Find by ID option chosen");
+                        System.out.println("Find Staff by ID option chosen");
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -266,15 +268,14 @@ public class App {
 
         System.out.println("\nExiting Collections Sub Menu.");
     }
-    public static void DBFindAllStaff(){
-        StaffDAOInterface IStaffDao = new MySqlStaffDAO();
+    public static void DBFindAllStaff(StaffDAOInterface IStaffDao){
         try
         {
-            System.out.println("\nCall findAllStaff()");
+            System.out.println("\nfindAllStaff()");
             List<Staff> staffList = IStaffDao.findAllStaff();
 
             if( staffList.isEmpty() )
-                System.out.println("There are no Staff");
+                System.out.println("No Staff found");
             else {
                 displayStaff(staffList);
             }
@@ -285,5 +286,28 @@ public class App {
             e.printStackTrace();
         }
 
+    }
+
+    public static void DBFindStaffbyID(StaffDAOInterface IStaffDao){
+
+        Scanner sc = new Scanner(System.in);
+        try
+        {
+            System.out.println("\nfindStaffById()");
+            List<Staff> staffList = IStaffDao.findAllStaff();
+
+            int id = sc.nextInt();
+            Staff s = IStaffDao.findStaffbyID(id);
+
+            if( s != null ) // null returned if userid and password not valid
+                System.out.println("Staff found: " + s);
+            else
+                System.out.println("Staff with ID '"+id+"' doesnt exist.");
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
     }
 }

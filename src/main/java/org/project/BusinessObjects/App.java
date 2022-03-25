@@ -225,8 +225,9 @@ public class App {
 
     public static void DBCollection(){
 
-        StaffDAOInterface IStaffDao = new MySqlStaffDAO();
-        //Sub Menu
+        StaffDAOInterface IStaffDao = new MySqlStaffDAO(); //Staff DAO Interface
+
+        //DB Collections Sub Menu
         final String MENU_ITEM = "\n*** COLLECTIONS MENU ***\n"
                 + "1. Find All Staff\n"
                 + "2. Find Staff by ID\n"
@@ -248,10 +249,11 @@ public class App {
                 switch (option) {
                     case findAll:
                         System.out.println("All Staff");
-                        DBFindAllStaff();
+                        DBFindAllStaff(IStaffDao);
                         break;
                     case findByID:
                         System.out.println("Find Staff by ID option chosen");
+                        DBFindStaffByID(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -288,21 +290,29 @@ public class App {
 
     }
 
-    public static void DBFindStaffbyID(StaffDAOInterface IStaffDao){
+    public static void DBFindStaffByID(StaffDAOInterface IStaffDao){
 
         Scanner sc = new Scanner(System.in);
         try
         {
             System.out.println("\nfindStaffById()");
-            List<Staff> staffList = IStaffDao.findAllStaff();
 
-            int id = sc.nextInt();
-            Staff s = IStaffDao.findStaffbyID(id);
+            try {
+                System.out.println("Enter Staff ID");
 
-            if( s != null ) // null returned if userid and password not valid
-                System.out.println("Staff found: " + s);
-            else
-                System.out.println("Staff with ID '"+id+"' doesnt exist.");
+                int id = sc.nextInt();
+
+
+                Staff s = IStaffDao.findStaffbyID(id);
+
+                if (s != null) // null returned if userid and password not valid
+                    System.out.println("Staff found: ID=" + s.getStaff_id() + " " + s.getFirst_name() + " " + s.getLast_name() + "\tEmail=" + s.getEmail() + "\tWorkHours=" + s.getWork_hours() + "\tRatePerHour=" + s.getRate_per_hour());
+                else
+                    System.out.println("Staff with ID '" + id + "' doesnt exist.");
+            }
+            catch (NumberFormatException | InputMismatchException e){
+                System.out.println("Invalid ID");
+            }
 
         }
         catch( DaoException e )

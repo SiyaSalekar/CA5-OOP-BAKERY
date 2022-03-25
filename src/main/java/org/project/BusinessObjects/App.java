@@ -10,6 +10,12 @@ import java.util.*;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
+import org.project.DAO.MySqlStaffDAO;
+import org.project.DAO.StaffDAOInterface;
+import org.project.DTO.Staff;
+import org.project.Exceptions.DaoException;
+import java.util.List;
+
 /**
  * Hello world!
  *
@@ -41,15 +47,17 @@ public class App {
                 + "3. Display Staff-Station from TreeMap in order of Staff_First_Name\n"
                 + "4. Priority Sequence Simulation\n"
                 + "5. PriorityQueue Two-Field Comparison Demo\n"
-                + "6. Exit\n"
-                + "Enter Option [1,6]";
+                + "6. Staff DB Collections\n"
+                + "7. Exit\n"
+                + "Enter Option [1,7]";
 
         final int DISPLAY = 1;
         final int HASH_RETRIEVE = 2;
         final int TREE_RETRIEVE = 3;
         final int PriorityQueueDisplay = 4;
         final int TwoFieldComparison = 5;
-        final int EXIT = 6;
+        final int Staff_Collections = 6;
+        final int EXIT = 7;
 
 
         Scanner keyboard = new Scanner(System.in);
@@ -79,6 +87,8 @@ public class App {
                         break;
                     case TwoFieldComparison:
                         PriorityQueueTwoFieldComparisonDemo(staff_list);
+                    case Staff_Collections:
+                        DBCollection();
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -98,7 +108,7 @@ public class App {
     }
 
     //Feature1
-    public static void displayStaff(ArrayList<Staff> staffArrayList) {
+    public static void displayStaff(List<Staff> staffArrayList) {
         System.out.printf("%5s\t%-15s\t%-15s\t%-2s\t%5s %15s\n", "ID", "First_Name", "Last_Name", "Rate_Per_Hour", "Work_Hours", "Email");
 
         for (Staff s : staffArrayList) {
@@ -211,5 +221,69 @@ public class App {
         while (iterator.hasNext()) {
             System.out.println(queue.remove());
         }
+    }
+
+    public static void DBCollection(){
+        //Sub Menu
+        final String MENU_ITEM = "\n*** COLLECTIONS MENU ***\n"
+                + "1. Find All Staff\n"
+                + "2. Find Staff by ID\n"
+                + "3. Exit\n"
+                + "Enter Option [1,3]";
+
+        final int findAll = 1;
+        final int findByID = 2;
+        final int EXIT = 3;
+
+
+        Scanner kb = new Scanner(System.in);
+        int option = 0;
+        do {
+            System.out.println("\n" + MENU_ITEM);
+            try {
+                String usersInput = kb.nextLine();
+                option = Integer.parseInt(usersInput);
+                switch (option) {
+                    case findAll:
+                        System.out.println("All Staff");
+                        DBFindAllStaff();
+                        break;
+                    case findByID:
+                        System.out.println("Find by ID option chosen");
+                        break;
+                    case EXIT:
+                        System.out.println("Exit Menu option chosen");
+                        break;
+                    default:
+                        System.out.print("Invalid option - please enter number in range");
+                        break;
+                }
+
+            } catch (InputMismatchException | NumberFormatException e) {
+                System.out.print("Invalid option - please enter number in range");
+            }
+        } while (option != EXIT);
+
+        System.out.println("\nExiting Collections Sub Menu.");
+    }
+    public static void DBFindAllStaff(){
+        StaffDAOInterface IStaffDao = new MySqlStaffDAO();
+        try
+        {
+            System.out.println("\nCall findAllStaff()");
+            List<Staff> staffList = IStaffDao.findAllStaff();
+
+            if( staffList.isEmpty() )
+                System.out.println("There are no Staff");
+            else {
+                displayStaff(staffList);
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -25,7 +25,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             //Get connection object using the methods in the super class (MySqlDao.java)...
             connection = this.getConnection();
 
-            String query = "SELECT * FROM staffbakery";
+            String query = "SELECT * FROM bakerystaff";
             ps = connection.prepareStatement(query);
 
             //Using a PreparedStatement to execute SQL...
@@ -54,11 +54,57 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
                     freeConnection(connection);
                 }
             } catch (SQLException e) {
-                throw new DaoException("findAllUsers() " + e.getMessage());
+                throw new DaoException("findAllStaff() " + e.getMessage());
             }
         }
         return staffList;     // may be empty
     }
+
+    @Override
+    public Staff findStaffbyID(int id) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Staff s = null;
+        try {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM bakerystaff WHERE staffID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int staffID = resultSet.getInt("staffID");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                double ratePerHour = resultSet.getDouble("ratePerHour");
+                int workHours = resultSet.getInt("workHours");
+                String email = resultSet.getString("email");
+                s = new Staff(staffID, firstName, lastName, ratePerHour, workHours, email);
+
+            }
+        } catch (SQLException e) {
+            throw new DaoException("findStaffbyID() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findStaffbyID() " + e.getMessage());
+            }
+        }
+        return s;     // reference to User object, or null value
+    }
+
+
 
 
 

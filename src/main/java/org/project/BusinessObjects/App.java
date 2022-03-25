@@ -1,6 +1,11 @@
-package org.project;
+package org.project.BusinessObjects;
 
-import java.io.IOException;
+import org.project.DTO.Staff;
+import org.project.SortType;
+import org.project.StaffFirstNameComparator;
+import org.project.StaffWorkHoursComparator;
+import org.project.Station;
+
 import java.util.*;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -9,26 +14,24 @@ import java.util.PriorityQueue;
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         //Arraylist Initialization
         ArrayList<Staff> staff_list = new ArrayList<>();
 
-        staff_list.add(new Staff(0, "Tanya","Martin", 10.8, 20, "tm@gmail.com"));
-        staff_list.add(new Staff(1, "Siya","Salekar", 11.8, 40, "ss@gmail.com"));
-        staff_list.add(new Staff(2, "Josh","Butler", 12.8, 40, "jb@gmail.com"));
-        staff_list.add(new Staff(3, "Claire","Martin", 12.8, 30, "cm@gmail.com"));
-        staff_list.add(new Staff(4, "Efe","Leonard", 10.8, 20, "el@gmail.com"));
-        staff_list.add(new Staff(5, "Aaron","McCabe", 12.8, 20, "am@gmail.com"));
-        staff_list.add(new Staff(6, "John","Stewart", 11.8, 30, "jost@gmail.com"));
-        staff_list.add(new Staff(7, "Jake","Cheruil", 11.8, 20, "jach@gmail.com"));
-        staff_list.add(new Staff(8, "Patrick","Donchev", 10.8, 40, "ptr@gmail.com"));
-        staff_list.add(new Staff(9, "Hayley","Dixon", 11.8, 30, "hd@gmail.com"));
-        staff_list.add(new Staff(10, "Ira","Thete", 10.8, 10, "it@gmail.com"));
-        staff_list.add(new Staff(11, "Tanya","Martin", 10.8, 30, "tm@gmail.com"));
-        staff_list.add(new Staff(12, "Siya","Salekar", 11.8, 20, "ss@gmail.com"));
+        staff_list.add(new Staff(0, "Tanya", "Martin", 10.8, 20, "tm@gmail.com"));
+        staff_list.add(new Staff(1, "Siya", "Salekar", 11.8, 40, "ss@gmail.com"));
+        staff_list.add(new Staff(2, "Josh", "Butler", 12.8, 40, "jb@gmail.com"));
+        staff_list.add(new Staff(3, "Claire", "Martin", 12.8, 30, "cm@gmail.com"));
+        staff_list.add(new Staff(4, "Efe", "Leonard", 10.8, 20, "el@gmail.com"));
+        staff_list.add(new Staff(5, "Aaron", "McCabe", 12.8, 20, "am@gmail.com"));
+        staff_list.add(new Staff(6, "John", "Stewart", 11.8, 30, "jost@gmail.com"));
+        staff_list.add(new Staff(7, "Jake", "Cheruil", 11.8, 20, "jach@gmail.com"));
+        staff_list.add(new Staff(8, "Patrick", "Donchev", 10.8, 40, "ptr@gmail.com"));
+        staff_list.add(new Staff(9, "Hayley", "Dixon", 11.8, 30, "hd@gmail.com"));
+        staff_list.add(new Staff(10, "Ira", "Thete", 10.8, 10, "it@gmail.com"));
+        staff_list.add(new Staff(11, "Tanya", "Martin", 10.8, 30, "tm@gmail.com"));
+        staff_list.add(new Staff(12, "Siya", "Salekar", 11.8, 20, "ss@gmail.com"));
 
 
         //Main Menu
@@ -51,15 +54,12 @@ public class App
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
-        do
-        {
-            System.out.println("\n"+MENU_ITEMS);
-            try
-            {
+        do {
+            System.out.println("\n" + MENU_ITEMS);
+            try {
                 String usersInput = keyboard.nextLine();
                 option = Integer.parseInt(usersInput);
-                switch (option)
-                {
+                switch (option) {
                     case DISPLAY:
                         System.out.println("All Staff");
                         System.out.println();
@@ -88,8 +88,7 @@ public class App
                         break;
                 }
 
-            } catch (InputMismatchException |NumberFormatException e)
-            {
+            } catch (InputMismatchException | NumberFormatException e) {
                 System.out.print("Invalid option - please enter number in range");
             }
         } while (option != EXIT);
@@ -100,10 +99,10 @@ public class App
 
     //Feature1
     public static void displayStaff(ArrayList<Staff> staffArrayList) {
-        System.out.printf("%5s\t%-15s\t%-15s\t%-2s\t%5s %15s\n","ID","First_Name","Last_Name","Rate_Per_Hour","Work_Hours","Email");
+        System.out.printf("%5s\t%-15s\t%-15s\t%-2s\t%5s %15s\n", "ID", "First_Name", "Last_Name", "Rate_Per_Hour", "Work_Hours", "Email");
 
         for (Staff s : staffArrayList) {
-            System.out.printf("%5d\t%-15s\t%-15s\t%-2.2f\t%10d\t\t\t\t\t%-20s\n",s.getStaff_id(),s.getFirst_name(),s.getLast_name(),s.getRate_per_hour(),s.getWork_hours(),s.getEmail());
+            System.out.printf("%5d\t%-15s\t%-15s\t%-2.2f\t%10d\t\t\t\t\t%-20s\n", s.getStaff_id(), s.getFirst_name(), s.getLast_name(), s.getRate_per_hour(), s.getWork_hours(), s.getEmail());
         }
     }
 
@@ -111,8 +110,8 @@ public class App
     public static void hashRetrieve(ArrayList<Staff> staffArrayList) {
         Scanner sc = new Scanner(System.in);
         Map<Integer, Staff> map = new HashMap<>();
-        for(Staff s: staffArrayList){
-            map.put(s.getStaff_id(),s);
+        for (Staff s : staffArrayList) {
+            map.put(s.getStaff_id(), s);
         }
 
         // Display all possible options to user
@@ -122,40 +121,38 @@ public class App
             System.out.print(id + ", ");
         }
 
-        try{
+        try {
             System.out.println("\nEnter Staff ID");
             int key = sc.nextInt();
-            if(map.containsKey(key)){
+            if (map.containsKey(key)) {
                 System.out.println("Object with key " + key + " - " + map.get(key));
             } else {
-                System.out.println("Staff object with key " + key+" is NOT found.");
+                System.out.println("Staff object with key " + key + " is NOT found.");
             }
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Id is not a Number");
         }
 
     }
 
     //Feature 3
-    public static void treeRetrieve(ArrayList<Staff> staffArrayList){
+    public static void treeRetrieve(ArrayList<Staff> staffArrayList) {
         //Station objects
-        Station s1 = new Station(1,"Baking");
-        Station s2 = new Station(2,"Deserts");
-        Station s3 = new Station(3,"Kneading");
+        Station s1 = new Station(1, "Baking");
+        Station s2 = new Station(2, "Deserts");
+        Station s3 = new Station(3, "Kneading");
 
         Map<Staff, Station> stationMap = new TreeMap<>(new StaffFirstNameComparator());
 
         // filling values in treeMap as per work hours just to avoid tedious hard coding
 
-        for(Staff s: staffArrayList){
-            if(s.getWork_hours()==20){
+        for (Staff s : staffArrayList) {
+            if (s.getWork_hours() == 20) {
                 stationMap.put(s, s1);
-            }
-            else if(s.getWork_hours()==40){
-                stationMap.put(s,s2);
-            }
-            else{
-                stationMap.put(s,s3);
+            } else if (s.getWork_hours() == 40) {
+                stationMap.put(s, s2);
+            } else {
+                stationMap.put(s, s3);
             }
         }
 
@@ -165,7 +162,7 @@ public class App
         for (Map.Entry<Staff, Station> entry : stationMap.entrySet()) {
             Staff staff = entry.getKey();
             Station station = entry.getValue();
-            System.out.println("{"+staff+"} -> "+station);
+            System.out.println("{" + staff + "} -> " + station);
         }
 
     }
@@ -178,10 +175,10 @@ public class App
         System.out.println();
         System.out.println("Added two third and second priority elements");
 
-        queue.add(new Staff(2, "John","Stewart", 11.8, 30, "jost@gmail.com"));
-        queue.add(new Staff(3, "Jake","Cheruil", 11.8, 42, "jach@gmail.com"));
-        queue.add(new Staff(4, "Patrick","Donchev", 10.8, 40, "patryck@gmail.com"));
-        queue.add(new Staff(5, "Hayley","Dixon", 11.8, 35, "hd@gmail.com"));
+        queue.add(new Staff(2, "John", "Stewart", 11.8, 30, "jost@gmail.com"));
+        queue.add(new Staff(3, "Jake", "Cheruil", 11.8, 42, "jach@gmail.com"));
+        queue.add(new Staff(4, "Patrick", "Donchev", 10.8, 40, "patryck@gmail.com"));
+        queue.add(new Staff(5, "Hayley", "Dixon", 11.8, 35, "hd@gmail.com"));
 
 
         System.out.println();
@@ -189,7 +186,7 @@ public class App
         System.out.println(queue.remove());
 
         //Added a top priority element
-        queue.add(new Staff(1, "Aaron","McCabe", 12.8, 20, "am@gmail.com"));
+        queue.add(new Staff(1, "Aaron", "McCabe", 12.8, 20, "am@gmail.com"));
         System.out.println();
         System.out.println("Added a top priority element");
         System.out.println();
@@ -201,11 +198,11 @@ public class App
         }
     }
 
-    public static void PriorityQueueTwoFieldComparisonDemo(ArrayList<Staff> stafflist){
+    public static void PriorityQueueTwoFieldComparisonDemo(ArrayList<Staff> stafflist) {
 
 
         PriorityQueue<Staff> queue = new PriorityQueue<Staff>();
-        for(Staff s: stafflist){
+        for (Staff s : stafflist) {
             queue.add(s);
         }
 
@@ -215,6 +212,4 @@ public class App
             System.out.println(queue.remove());
         }
     }
-
 }
-

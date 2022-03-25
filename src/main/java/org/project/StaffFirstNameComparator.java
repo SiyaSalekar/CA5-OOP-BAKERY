@@ -1,6 +1,8 @@
 package org.project;
 
 
+import org.project.DTO.Staff;
+
 import java.util.Comparator;
 
 public class StaffFirstNameComparator implements Comparator<Staff>

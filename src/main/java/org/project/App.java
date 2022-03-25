@@ -24,11 +24,11 @@ public class App
         staff_list.add(new Staff(5, "Aaron","McCabe", 12.8, 20, "am@gmail.com"));
         staff_list.add(new Staff(6, "John","Stewart", 11.8, 30, "jost@gmail.com"));
         staff_list.add(new Staff(7, "Jake","Cheruil", 11.8, 20, "jach@gmail.com"));
-        staff_list.add(new Staff(8, "Patrick","Donchev", 10.8, 40, "patryck@gmail.com"));
+        staff_list.add(new Staff(8, "Patrick","Donchev", 10.8, 40, "ptr@gmail.com"));
         staff_list.add(new Staff(9, "Hayley","Dixon", 11.8, 30, "hd@gmail.com"));
         staff_list.add(new Staff(10, "Ira","Thete", 10.8, 10, "it@gmail.com"));
-        staff_list.add(new Staff(0, "Tanya","Martin", 10.8, 30, "tm@gmail.com"));
-        staff_list.add(new Staff(1, "Siya","Salekar", 11.8, 20, "ss@gmail.com"));
+        staff_list.add(new Staff(11, "Tanya","Martin", 10.8, 30, "tm@gmail.com"));
+        staff_list.add(new Staff(12, "Siya","Salekar", 11.8, 20, "ss@gmail.com"));
 
 
         //Main Menu
@@ -47,7 +47,6 @@ public class App
         final int PriorityQueueDisplay = 4;
         final int TwoFieldComparison = 5;
         final int EXIT = 6;
-
 
 
         Scanner keyboard = new Scanner(System.in);
@@ -152,7 +151,7 @@ public class App
             if(s.getWork_hours()==20){
                 stationMap.put(s, s1);
             }
-            else if(s.getWork_hours()==20){
+            else if(s.getWork_hours()==40){
                 stationMap.put(s,s2);
             }
             else{

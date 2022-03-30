@@ -105,7 +105,44 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
     }
 
 
+    /*Delete by ID*/
+    @Override
+    public void deleteById(int id) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int staffID = id;
+
+        try {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            connection = this.getConnection();
+
+            String query = "DELETE FROM bakerystaff WHERE staffID = ?;";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, staffID);
+
+            preparedStatement.executeUpdate();
 
 
+        } catch (SQLException e) {
+            throw new DaoException("findAllStaffResultSet() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findAllStaff() " + e.getMessage());
+            }
+        }
+    }
 
 }

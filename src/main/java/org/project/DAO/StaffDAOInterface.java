@@ -8,6 +8,6 @@ public interface StaffDAOInterface
 {
     public List<Staff> findAllStaff() throws DaoException;
     public Staff findStaffbyID(int StaffID) throws DaoException;
-
+    public void deleteById(int Id) throws DaoException;
 
 }

@@ -21,6 +21,7 @@ import java.util.List;
  *
  */
 public class App {
+
     public static void main(String[] args) {
         //Arraylist Initialization
         ArrayList<Staff> staff_list = new ArrayList<>();
@@ -38,7 +39,6 @@ public class App {
         staff_list.add(new Staff(10, "Ira", "Thete", 10.8, 10, "it@gmail.com"));
         staff_list.add(new Staff(11, "Tanya", "Martin", 10.8, 30, "tm@gmail.com"));
         staff_list.add(new Staff(12, "Siya", "Salekar", 11.8, 20, "ss@gmail.com"));
-
 
         //Main Menu
         final String MENU_ITEMS = "\n*** MAIN MENU ***\n"
@@ -87,6 +87,7 @@ public class App {
                         break;
                     case TwoFieldComparison:
                         PriorityQueueTwoFieldComparisonDemo(staff_list);
+                        break;
                     case Staff_Collections:
                         DBCollection();
                         break;
@@ -231,12 +232,14 @@ public class App {
         final String MENU_ITEM = "\n*** COLLECTIONS MENU ***\n"
                 + "1. Find All Staff\n"
                 + "2. Find Staff by ID\n"
-                + "3. Exit\n"
-                + "Enter Option [1,3]";
+                + "3. Delete Staff by ID\n"
+                + "4. Exit\n"
+                + "Enter Option [1,4]";
 
         final int findAll = 1;
         final int findByID = 2;
-        final int EXIT = 3;
+        final int deleteByLastName =3;
+        final int EXIT = 4;
 
 
         Scanner kb = new Scanner(System.in);
@@ -254,6 +257,10 @@ public class App {
                     case findByID:
                         System.out.println("Find Staff by ID option chosen");
                         DBFindStaffByID(IStaffDao);
+                        break;
+                    case deleteByLastName:
+                        System.out.println("Delete Staff by LastName option chosen");
+                        DBDeleteStaffByID(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -309,6 +316,40 @@ public class App {
                     System.out.println("Staff found: ID=" + s.getStaff_id() + " " + s.getFirst_name() + " " + s.getLast_name() + "\tEmail=" + s.getEmail() + "\tWorkHours=" + s.getWork_hours() + "\tRatePerHour=" + s.getRate_per_hour());
                 else
                     System.out.println("Staff with ID '" + id + "' doesnt exist.");
+            }
+            catch (NumberFormatException | InputMismatchException e){
+                System.out.println("Invalid ID");
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void DBDeleteStaffByID(StaffDAOInterface IStaffDao){
+        Scanner sc = new Scanner(System.in);
+        try
+        {
+            System.out.println("\ndeleteStaffByID()");
+
+            try {
+                System.out.println("Enter Staff ID");
+
+                int id = sc.nextInt();
+
+
+                Staff s = IStaffDao.findStaffbyID(id);
+
+                if(s!=null){
+                    IStaffDao.deleteById(id);
+                    System.out.println("Staff with ID "+id+" deleted successfully.");
+                }
+                else{
+                    System.out.println("Staff with ID "+id+" doesn't exist.");
+                }
+
             }
             catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Invalid ID");

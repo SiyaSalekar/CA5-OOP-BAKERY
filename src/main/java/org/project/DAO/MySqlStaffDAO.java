@@ -3,6 +3,7 @@ package org.project.DAO;
 
 import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
+import org.project.StaffFirstNameComparator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,5 +145,102 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             }
         }
     }
+
+    /*Add Staff*/
+    @Override
+    public void addStaff(Staff staff) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int STAFF_ID = staff.getStaff_id();
+        String FIRST_NAME = staff.getFirst_name();
+        String LAST_NAME = staff.getLast_name();
+        double RATE_PER_HOUR  = staff.getRate_per_hour();
+        int WORK_HOURS  = staff.getWork_hours();
+        String EMAIL = staff.getEmail();
+
+        try {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            connection = this.getConnection();
+
+            String query = "INSERT INTO BAKERYSTAFF\n" +
+                    "VALUES (?,?, ?, ?, ?,?);";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, STAFF_ID);
+            preparedStatement.setString(2, FIRST_NAME);
+            preparedStatement.setString(3, LAST_NAME);
+            preparedStatement.setDouble(4, RATE_PER_HOUR);
+            preparedStatement.setInt(5, WORK_HOURS);
+            preparedStatement.setString(6, EMAIL);
+
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new DaoException("findAllStaffSet() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findAllStaff() " + e.getMessage());
+            }
+        }
+
+    }
+
+    /*Find by Filter*/
+//    @Override
+//    public List<Staff> findStaffUsingFilter(StaffFirstNameComparator staffFirstNameComparator) throws DaoException {
+//        Connection connection = null;
+//        PreparedStatement ps = null;
+//        ResultSet resultSet = null;
+//        List<User> usersList = new ArrayList<>();
+//
+//        try {
+//            //Get connection object using the methods in the super class (MySqlDao.java)...
+//            connection = this.getConnection();
+//
+//            String query = "Select * from BAKERYSTAFF ORDER by id";
+//            ps = connection.prepareStatement(query);
+//
+//            //Using a PreparedStatement to execute SQL...
+//            resultSet = ps.executeQuery();
+//            while (resultSet.next()) {
+//                int userId = resultSet.getInt("USER_ID");
+//                String username = resultSet.getString("USERNAME");
+//                String password = resultSet.getString("PASSWORD");
+//                String lastname = resultSet.getString("LAST_NAME");
+//                String firstname = resultSet.getString("FIRST_NAME");
+//                User u = new User(userId, firstname, lastname, username, password);
+//                usersList.add(u);
+//            }
+//        } catch (SQLException e) {
+//            throw new DaoException("findAllUseresultSet() " + e.getMessage());
+//        } finally {
+//            try {
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (connection != null) {
+//                    freeConnection(connection);
+//                }
+//            } catch (SQLException e) {
+//                throw new DaoException("findAllUsers() " + e.getMessage());
+//            }
+//        }
+//        return usersList;     // may be empty
+//    }
 
 }

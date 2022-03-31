@@ -233,13 +233,15 @@ public class App {
                 + "1. Find All Staff\n"
                 + "2. Find Staff by ID\n"
                 + "3. Delete Staff by ID\n"
-                + "4. Exit\n"
+                + "4. Add Staff\n"
+                + "5. Exit\n"
                 + "Enter Option [1,4]";
 
         final int findAll = 1;
         final int findByID = 2;
         final int deleteByLastName =3;
-        final int EXIT = 4;
+        final int insertStaff =4;
+        final int EXIT = 5;
 
 
         Scanner kb = new Scanner(System.in);
@@ -261,6 +263,10 @@ public class App {
                     case deleteByLastName:
                         System.out.println("Delete Staff by LastName option chosen");
                         DBDeleteStaffByID(IStaffDao);
+                        break;
+                    case insertStaff:
+                        System.out.println("Insert Staff option chosen");
+                        DBInsertStaff(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -353,6 +359,102 @@ public class App {
             }
             catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Invalid ID");
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+    public static void DBFilter(StaffDAOInterface IStaffDao){
+
+        Scanner sc = new Scanner(System.in);
+        try
+        {
+            System.out.println("\ninsertStaff()");
+
+            try {
+
+                System.out.println("Enter Staff ID");
+                int id = sc.nextInt();
+                Staff s = IStaffDao.findStaffbyID(id);
+                if(s==null) {
+                    System.out.println("\nCall addStaff()\n");
+                    try {
+                        System.out.println("Enter Staff First Name");
+                        String first_name = sc.next();
+                        System.out.println("Enter Staff Last Name");
+                        String last_name = sc.next();
+                        System.out.println("Enter Staff Rate Per Hour");
+                        double rate_per_hour = sc.nextDouble();
+                        System.out.println("Enter Staff Work Hours");
+                        int work_hours = sc.nextInt();
+                        System.out.println("Enter Staff Email");
+                        String email = sc.next();
+                        Staff staff = new Staff(id,first_name,last_name,rate_per_hour,work_hours,email);
+                        IStaffDao.addStaff(staff);
+                        System.out.println("Added Successfully.");
+                    }catch(NumberFormatException | InputMismatchException e){
+                        System.out.println("Invalid Format");
+                    }
+                }
+                else{
+                    System.out.println("Duplicate ID - Insert Failed!");
+                }
+
+            }
+            catch (NumberFormatException | InputMismatchException e){
+                System.out.println("Invalid Format");
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void DBInsertStaff(StaffDAOInterface IStaffDao){
+
+        Scanner sc = new Scanner(System.in);
+        try
+        {
+            System.out.println("\ninsertStaff()");
+
+            try {
+
+                System.out.println("Enter Staff ID");
+                int id = sc.nextInt();
+                Staff s = IStaffDao.findStaffbyID(id);
+                if(s==null) {
+                    System.out.println("\nCall addStaff()\n");
+                    try {
+                        System.out.println("Enter Staff First Name");
+                        String first_name = sc.next();
+                        System.out.println("Enter Staff Last Name");
+                        String last_name = sc.next();
+                        System.out.println("Enter Staff Rate Per Hour");
+                        double rate_per_hour = sc.nextDouble();
+                        System.out.println("Enter Staff Work Hours");
+                        int work_hours = sc.nextInt();
+                        System.out.println("Enter Staff Email");
+                        String email = sc.next();
+                        Staff staff = new Staff(id,first_name,last_name,rate_per_hour,work_hours,email);
+                        IStaffDao.addStaff(staff);
+                        System.out.println("Added Successfully.");
+                    }catch(NumberFormatException | InputMismatchException e){
+                        System.out.println("Invalid Format");
+                    }
+                }
+                else{
+                    System.out.println("Duplicate ID - Insert Failed!");
+                }
+
+            }
+            catch (NumberFormatException | InputMismatchException e){
+                System.out.println("Invalid Format");
             }
 
         }

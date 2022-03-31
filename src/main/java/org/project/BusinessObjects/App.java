@@ -234,14 +234,16 @@ public class App {
                 + "2. Find Staff by ID\n"
                 + "3. Delete Staff by ID\n"
                 + "4. Add Staff\n"
-                + "5. Exit\n"
+                + "5. List Staff Using Filter\n"
+                + "6. Exit\n"
                 + "Enter Option [1,4]";
 
         final int findAll = 1;
         final int findByID = 2;
         final int deleteByLastName =3;
         final int insertStaff =4;
-        final int EXIT = 5;
+        final int findAllUsingFilter = 5;
+        final int EXIT = 6;
 
 
         Scanner kb = new Scanner(System.in);
@@ -267,6 +269,10 @@ public class App {
                     case insertStaff:
                         System.out.println("Insert Staff option chosen");
                         DBInsertStaff(IStaffDao);
+                        break;
+                    case findAllUsingFilter:
+                        System.out.println("Find Staff using Filter option chosen");
+                        DBFilter(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -462,5 +468,73 @@ public class App {
         {
             e.printStackTrace();
         }
+    }
+
+    public static void DBFilterSubMenu(){
+
+        StaffDAOInterface IStaffDao = new MySqlStaffDAO(); //Staff DAO Interface
+
+        //DB Collections Sub Menu
+        final String MENU_ITEM = "\n*** COLLECTIONS FILTER BY ***\n"
+                + "1. WORK HOURS\n"
+                + "2. FIRST NAME\n"
+                + "3. Exit\n"
+                + "Enter Option [1,3]";
+
+        final int filterWorkHour =1;
+        final int filterFirstName =2;
+        final int EXIT = 3;
+
+
+        Scanner kb = new Scanner(System.in);
+        int option = 0;
+        do {
+            System.out.println("\n" + MENU_ITEM);
+            try {
+                String usersInput = kb.nextLine();
+                option = Integer.parseInt(usersInput);
+                switch (option) {
+                    case filterWorkHour:
+                        System.out.println("Filter by Work Hour");
+                        DBFindAllStaffUsingFilterWorkHours(IStaffDao);
+                        break;
+                    case filterFirstName:
+                        System.out.println("Filter by First Name");
+                        DBFindAllStaffUsingFilterWorkHours(IStaffDao);
+                        break;
+                    case EXIT:
+                        System.out.println("Exit Menu option chosen");
+                        break;
+                    default:
+                        System.out.print("Invalid option - please enter number in range");
+                        break;
+                }
+
+            } catch (InputMismatchException | NumberFormatException e) {
+                System.out.print("Invalid option - please enter number in range");
+            }
+        } while (option != EXIT);
+
+        System.out.println("\nExiting Filter Sub Menu.");
+    }
+
+    public static void DBFindAllStaffUsingFilterWorkHours(StaffDAOInterface IStaffDao){
+        try
+        {
+            System.out.println("\nfindAllStaffUsingFilter()\nIn Order of Work_Hours\n");
+            List<Staff> staffList = IStaffDao.findStaffUsingFilterWorkHour();
+
+            if( staffList.isEmpty() )
+                System.out.println("No Staff found");
+            else {
+                displayStaff(staffList);
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
     }
 }

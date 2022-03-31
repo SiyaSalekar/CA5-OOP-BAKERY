@@ -198,49 +198,96 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
     }
 
     /*Find by Filter*/
-//    @Override
-//    public List<Staff> findStaffUsingFilter(StaffFirstNameComparator staffFirstNameComparator) throws DaoException {
-//        Connection connection = null;
-//        PreparedStatement ps = null;
-//        ResultSet resultSet = null;
-//        List<User> usersList = new ArrayList<>();
-//
-//        try {
-//            //Get connection object using the methods in the super class (MySqlDao.java)...
-//            connection = this.getConnection();
-//
-//            String query = "Select * from BAKERYSTAFF ORDER by id";
-//            ps = connection.prepareStatement(query);
-//
-//            //Using a PreparedStatement to execute SQL...
-//            resultSet = ps.executeQuery();
-//            while (resultSet.next()) {
-//                int userId = resultSet.getInt("USER_ID");
-//                String username = resultSet.getString("USERNAME");
-//                String password = resultSet.getString("PASSWORD");
-//                String lastname = resultSet.getString("LAST_NAME");
-//                String firstname = resultSet.getString("FIRST_NAME");
-//                User u = new User(userId, firstname, lastname, username, password);
-//                usersList.add(u);
-//            }
-//        } catch (SQLException e) {
-//            throw new DaoException("findAllUseresultSet() " + e.getMessage());
-//        } finally {
-//            try {
-//                if (resultSet != null) {
-//                    resultSet.close();
-//                }
-//                if (ps != null) {
-//                    ps.close();
-//                }
-//                if (connection != null) {
-//                    freeConnection(connection);
-//                }
-//            } catch (SQLException e) {
-//                throw new DaoException("findAllUsers() " + e.getMessage());
-//            }
-//        }
-//        return usersList;     // may be empty
-//    }
+    @Override
+    public List<Staff> findStaffUsingFilterWorkHour() throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Staff> staffList = new ArrayList<>();
+
+        try {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            connection = this.getConnection();
+
+            String query = "Select * from BAKERYSTAFF ORDER by workHours";
+            ps = connection.prepareStatement(query);
+
+            //Using a PreparedStatement to execute SQL...
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int staffID = resultSet.getInt("staffID");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                double ratePerHour = resultSet.getDouble("ratePerHour");
+                int workHours = resultSet.getInt("workHours");
+                String email = resultSet.getString("email");
+                Staff s = new Staff(staffID, firstName, lastName, ratePerHour, workHours, email);
+                staffList.add(s);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("findAllStaffFilter() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findAllStaff() " + e.getMessage());
+            }
+        }
+        return staffList;     // may be empty
+    }
+
+    @Override
+    public List<Staff> findStaffUsingFilterFirstName() throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Staff> staffList = new ArrayList<>();
+
+        try {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            connection = this.getConnection();
+
+            String query = "Select * from BAKERYSTAFF ORDER by firstName";
+            ps = connection.prepareStatement(query);
+
+            //Using a PreparedStatement to execute SQL...
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int staffID = resultSet.getInt("staffID");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                double ratePerHour = resultSet.getDouble("ratePerHour");
+                int workHours = resultSet.getInt("workHours");
+                String email = resultSet.getString("email");
+                Staff s = new Staff(staffID, firstName, lastName, ratePerHour, workHours, email);
+                staffList.add(s);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("findAllStaffFilter() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findAllStaff() " + e.getMessage());
+            }
+        }
+        return staffList;     // may be empty
+    }
 
 }

@@ -12,6 +12,7 @@ public interface StaffDAOInterface
     public Staff findStaffbyID(int StaffID) throws DaoException;
     public void deleteById(int Id) throws DaoException;
     public void addStaff(Staff staff) throws DaoException;
-    //public List<Staff> findStaffUsingFilter(StaffFirstNameComparator firstNameComparator) throws DaoException;
+    public List<Staff> findStaffUsingFilterWorkHour() throws DaoException;
+    public List<Staff> findStaffUsingFilterFirstName() throws DaoException;
 
 }

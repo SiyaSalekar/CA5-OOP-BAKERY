@@ -15,6 +15,8 @@ import org.project.DAO.StaffDAOInterface;
 import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Hello world!
@@ -23,6 +25,8 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
+
+
         //Arraylist Initialization
         ArrayList<Staff> staff_list = new ArrayList<>();
 
@@ -107,6 +111,9 @@ public class App {
         System.out.println("\nExiting Main Menu, Thank you!.");
 
     }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     //Feature1
     public static void displayStaff(List<Staff> staffArrayList) {
@@ -413,9 +420,16 @@ public class App {
                         int work_hours = sc.nextInt();
                         System.out.println("Enter Staff Email");
                         String email = sc.next();
+                        /*regex*/
+                        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+                        if(matcher.matches()){
                         Staff staff = new Staff(id,first_name,last_name,rate_per_hour,work_hours,email);
                         IStaffDao.addStaff(staff);
                         System.out.println("Added Successfully.");
+                        }
+                        else{
+                            System.out.println("Email Format Incorrect - Failed to add Staff!");
+                        }
                     }catch(NumberFormatException | InputMismatchException e){
                         System.out.println("Invalid Format - Insert Failed!");
                     }

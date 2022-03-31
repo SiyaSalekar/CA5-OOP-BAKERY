@@ -16,5 +16,6 @@ public interface StaffDAOInterface
     public List<Staff> findStaffUsingFilterWorkHour() throws DaoException;
     public List<Staff> findStaffUsingFilterFirstName() throws DaoException;
     public void findAllStaffJSON(ArrayList<Staff> staffArrayList) throws DaoException;
+    public void findStaffbyIDJSON(int id) throws DaoException;
 
 }

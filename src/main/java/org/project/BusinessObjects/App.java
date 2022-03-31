@@ -236,8 +236,9 @@ public class App {
                 + "4. Add Staff\n"
                 + "5. List Staff Using Filter\n"
                 + "6. JSON All Staff\n"
-                + "7. Exit\n"
-                + "Enter Option [1,7]";
+                + "7. JSON Staff by ID\n"
+                + "8. Exit\n"
+                + "Enter Option [1,8]";
 
         final int findAll = 1;
         final int findByID = 2;
@@ -245,7 +246,8 @@ public class App {
         final int insertStaff =4;
         final int findAllUsingFilter = 5;
         final int findAllStaffJSON = 6;
-        final int EXIT = 7;
+        final int findStaffbyIDJSON = 7;
+        final int EXIT = 8;
 
 
         Scanner kb = new Scanner(System.in);
@@ -279,6 +281,10 @@ public class App {
                     case findAllStaffJSON:
                         System.out.println("JSON All Staff option chosen");
                         findAllStaffJSON(IStaffDao, staffArrayList);
+                        break;
+                    case findStaffbyIDJSON:
+                        System.out.println("JSON Staff by ID option chosen");
+                        findStaffbyIDJSON(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -521,6 +527,23 @@ public class App {
         try
         {
             IStaffDao.findAllStaffJSON(staffArrayList);
+        }catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+    public static void findStaffbyIDJSON(StaffDAOInterface IStaffDao){
+        Scanner kb = new Scanner(System.in);
+        try
+        {
+            try {
+                System.out.println("Enter Staff ID");
+                int json_id = kb.nextInt();
+                IStaffDao.findStaffbyIDJSON(json_id);
+
+            }catch (InputMismatchException | NumberFormatException e) {
+                System.out.print("Invalid option - please enter number in range");
+            }
         }catch( DaoException e )
         {
             e.printStackTrace();

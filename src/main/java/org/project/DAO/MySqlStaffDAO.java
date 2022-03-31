@@ -302,4 +302,38 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
     }
 
+    public void findStaffbyIDJSON(int id){
+
+        try{
+
+        List<Staff> staffList = findAllStaff();
+        String StaffJSON="";
+
+        Staff sTest= findStaffbyID(id);
+
+        if(sTest==null){
+            System.out.println("Staff with ID = "+id+" doesn't exist.");
+        }
+        else{
+            System.out.println("Staff with id "+id+" as a JSON String: ");
+        }
+
+        Gson gsonParser = new Gson();
+        for(Staff s: staffList){
+            if(s.getStaff_id()==id) {
+                StaffJSON = gsonParser.toJson(s);
+            }
+        }
+
+
+
+        System.out.println(StaffJSON);
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 }

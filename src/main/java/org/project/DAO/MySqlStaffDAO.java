@@ -1,6 +1,7 @@
 package org.project.DAO;
 
 
+import com.google.gson.Gson;
 import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
 import org.project.StaffFirstNameComparator;
@@ -288,6 +289,17 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             }
         }
         return staffList;     // may be empty
+    }
+
+    public void findAllStaffJSON(ArrayList<Staff> staffList){
+        System.out.println("All Staff as JSON String: ");
+
+        Gson gsonParser = new Gson();
+        for(Staff s: staffList){
+            String StaffJSON = gsonParser.toJson(s);
+            System.out.println(StaffJSON);
+        }
+
     }
 
 }

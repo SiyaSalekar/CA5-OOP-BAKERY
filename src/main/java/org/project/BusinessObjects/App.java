@@ -89,7 +89,7 @@ public class App {
                         PriorityQueueTwoFieldComparisonDemo(staff_list);
                         break;
                     case Staff_Collections:
-                        DBCollection();
+                        DBCollection(staff_list);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -224,7 +224,7 @@ public class App {
         }
     }
 
-    public static void DBCollection(){
+    public static void DBCollection(ArrayList<Staff> staffArrayList){
 
         StaffDAOInterface IStaffDao = new MySqlStaffDAO(); //Staff DAO Interface
 
@@ -235,15 +235,17 @@ public class App {
                 + "3. Delete Staff by ID\n"
                 + "4. Add Staff\n"
                 + "5. List Staff Using Filter\n"
-                + "6. Exit\n"
-                + "Enter Option [1,6]";
+                + "6. JSON All Staff\n"
+                + "7. Exit\n"
+                + "Enter Option [1,7]";
 
         final int findAll = 1;
         final int findByID = 2;
         final int deleteByLastName =3;
         final int insertStaff =4;
         final int findAllUsingFilter = 5;
-        final int EXIT = 6;
+        final int findAllStaffJSON = 6;
+        final int EXIT = 7;
 
 
         Scanner kb = new Scanner(System.in);
@@ -273,6 +275,10 @@ public class App {
                     case findAllUsingFilter:
                         System.out.println("Find Staff using Filter option chosen");
                         DBFilterSubMenu();
+                        break;
+                    case findAllStaffJSON:
+                        System.out.println("JSON All Staff option chosen");
+                        findAllStaffJSON(IStaffDao, staffArrayList);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -510,5 +516,14 @@ public class App {
             e.printStackTrace();
         }
 
+    }
+    public static void findAllStaffJSON(StaffDAOInterface IStaffDao, ArrayList<Staff> staffArrayList){
+        try
+        {
+            IStaffDao.findAllStaffJSON(staffArrayList);
+        }catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
     }
 }

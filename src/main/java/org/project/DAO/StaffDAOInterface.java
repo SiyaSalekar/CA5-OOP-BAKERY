@@ -4,6 +4,7 @@ import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
 import org.project.StaffFirstNameComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface StaffDAOInterface
@@ -14,5 +15,6 @@ public interface StaffDAOInterface
     public void addStaff(Staff staff) throws DaoException;
     public List<Staff> findStaffUsingFilterWorkHour() throws DaoException;
     public List<Staff> findStaffUsingFilterFirstName() throws DaoException;
+    public void findAllStaffJSON(ArrayList<Staff> staffArrayList) throws DaoException;
 
 }

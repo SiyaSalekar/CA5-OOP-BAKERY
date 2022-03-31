@@ -236,7 +236,7 @@ public class App {
                 + "4. Add Staff\n"
                 + "5. List Staff Using Filter\n"
                 + "6. Exit\n"
-                + "Enter Option [1,4]";
+                + "Enter Option [1,6]";
 
         final int findAll = 1;
         final int findByID = 2;
@@ -272,7 +272,7 @@ public class App {
                         break;
                     case findAllUsingFilter:
                         System.out.println("Find Staff using Filter option chosen");
-                        DBFilter(IStaffDao);
+                        DBFilterSubMenu();
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -373,53 +373,7 @@ public class App {
             e.printStackTrace();
         }
     }
-    public static void DBFilter(StaffDAOInterface IStaffDao){
 
-        Scanner sc = new Scanner(System.in);
-        try
-        {
-            System.out.println("\ninsertStaff()");
-
-            try {
-
-                System.out.println("Enter Staff ID");
-                int id = sc.nextInt();
-                Staff s = IStaffDao.findStaffbyID(id);
-                if(s==null) {
-                    System.out.println("\nCall addStaff()\n");
-                    try {
-                        System.out.println("Enter Staff First Name");
-                        String first_name = sc.next();
-                        System.out.println("Enter Staff Last Name");
-                        String last_name = sc.next();
-                        System.out.println("Enter Staff Rate Per Hour");
-                        double rate_per_hour = sc.nextDouble();
-                        System.out.println("Enter Staff Work Hours");
-                        int work_hours = sc.nextInt();
-                        System.out.println("Enter Staff Email");
-                        String email = sc.next();
-                        Staff staff = new Staff(id,first_name,last_name,rate_per_hour,work_hours,email);
-                        IStaffDao.addStaff(staff);
-                        System.out.println("Added Successfully.");
-                    }catch(NumberFormatException | InputMismatchException e){
-                        System.out.println("Invalid Format");
-                    }
-                }
-                else{
-                    System.out.println("Duplicate ID - Insert Failed!");
-                }
-
-            }
-            catch (NumberFormatException | InputMismatchException e){
-                System.out.println("Invalid Format");
-            }
-
-        }
-        catch( DaoException e )
-        {
-            e.printStackTrace();
-        }
-    }
 
 
     public static void DBInsertStaff(StaffDAOInterface IStaffDao){
@@ -451,7 +405,7 @@ public class App {
                         IStaffDao.addStaff(staff);
                         System.out.println("Added Successfully.");
                     }catch(NumberFormatException | InputMismatchException e){
-                        System.out.println("Invalid Format");
+                        System.out.println("Invalid Format - Insert Failed!");
                     }
                 }
                 else{
@@ -500,7 +454,7 @@ public class App {
                         break;
                     case filterFirstName:
                         System.out.println("Filter by First Name");
-                        DBFindAllStaffUsingFilterWorkHours(IStaffDao);
+                        DBFindAllStaffUsingFilterFirstName(IStaffDao);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -523,6 +477,26 @@ public class App {
         {
             System.out.println("\nfindAllStaffUsingFilter()\nIn Order of Work_Hours\n");
             List<Staff> staffList = IStaffDao.findStaffUsingFilterWorkHour();
+
+            if( staffList.isEmpty() )
+                System.out.println("No Staff found");
+            else {
+                displayStaff(staffList);
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void DBFindAllStaffUsingFilterFirstName(StaffDAOInterface IStaffDao){
+        try
+        {
+            System.out.println("\nfindAllStaffUsingFilter()\nIn Order of First_Name\n");
+            List<Staff> staffList = IStaffDao.findStaffUsingFilterFirstName();
 
             if( staffList.isEmpty() )
                 System.out.println("No Staff found");

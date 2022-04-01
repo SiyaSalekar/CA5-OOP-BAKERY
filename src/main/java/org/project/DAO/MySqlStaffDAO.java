@@ -2,6 +2,7 @@ package org.project.DAO;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
 import org.project.StaffFirstNameComparator;
@@ -295,11 +296,11 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
         System.out.println("All Staff as JSON String: ");
         try {
             List<Staff> staffList = findAllStaff();
-            Gson gsonParser = new Gson();
-            for (Staff s : staffList) {
-                String StaffJSON = gsonParser.toJson(s);
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();;
+                String StaffJSON = gsonParser.toJson(staffList);
+
                 System.out.println(StaffJSON);
-            }
+
         }catch ( DaoException e )
         {
             e.printStackTrace();
@@ -329,7 +330,6 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
                 StaffJSON = gsonParser.toJson(s);
             }
         }
-
 
 
         System.out.println(StaffJSON);

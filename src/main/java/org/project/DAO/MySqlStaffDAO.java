@@ -114,7 +114,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
     /*Delete by ID*/
     @Override
-    public void deleteById(int id) throws DaoException {
+    public String deleteById(int id) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -132,6 +132,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
             preparedStatement.executeUpdate();
 
+            return "Deleted Successfully";
 
         } catch (SQLException e) {
             throw new DaoException("findAllStaffResultSet() " + e.getMessage());

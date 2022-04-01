@@ -241,7 +241,7 @@ public class App {
                 + "2. Find Staff by ID\n"
                 + "3. Delete Staff by ID\n"
                 + "4. Add Staff\n"
-                + "5. List Staff Using Filter\n"
+                + "5. Filter Staff\n"
                 + "6. JSON All Staff\n"
                 + "7. JSON Staff by ID\n"
                 + "8. Exit\n"
@@ -502,7 +502,11 @@ public class App {
         try
         {
             System.out.println("\nfindAllStaffUsingFilter()\nIn Order of Work_Hours\n");
-            List<Staff> staffList = IStaffDao.findStaffUsingFilterWorkHour();
+            /**Using DB Query*/
+            //List<Staff> staffList = IStaffDao.findStaffUsingFilterWorkHour();
+
+            /***Using Comparator*/
+            List<Staff> staffList = IStaffDao.findStaffUsingFilterWorkHourComparator();
 
             if( staffList.isEmpty() )
                 System.out.println("No Staff found");
@@ -522,7 +526,11 @@ public class App {
         try
         {
             System.out.println("\nfindAllStaffUsingFilter()\nIn Order of First_Name\n");
-            List<Staff> staffList = IStaffDao.findStaffUsingFilterFirstName();
+            /**Using DB Query*/
+            //List<Staff> staffList = IStaffDao.findStaffUsingFilterFirstName();
+
+            /***Using Comparator*/
+            List<Staff> staffList = IStaffDao.findStaffUsingFilterFirstNameComparator();
 
             if( staffList.isEmpty() )
                 System.out.println("No Staff found");
@@ -540,7 +548,7 @@ public class App {
     public static void findAllStaffJSON(StaffDAOInterface IStaffDao){
         try
         {
-            IStaffDao.findAllStaffJSON();
+            System.out.println(IStaffDao.findAllStaffJSON());
         }catch( DaoException e )
         {
             e.printStackTrace();
@@ -553,7 +561,7 @@ public class App {
             try {
                 System.out.println("Enter Staff ID");
                 int json_id = kb.nextInt();
-                IStaffDao.findStaffbyIDJSON(json_id);
+                System.out.println(IStaffDao.findStaffbyIDJSON(json_id));
 
             }catch (InputMismatchException | NumberFormatException e) {
                 System.out.print("Invalid option - please enter number in range");

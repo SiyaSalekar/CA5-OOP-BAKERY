@@ -5,14 +5,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
+import org.project.SortType;
 import org.project.StaffFirstNameComparator;
+import org.project.StaffWorkHoursComparator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+
+import static org.project.BusinessObjects.App.VALID_EMAIL_ADDRESS_REGEX;
 
 
 public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
@@ -150,7 +154,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
     /*Add Staff*/
     @Override
-    public void addStaff(Staff staff) throws DaoException {
+    public String addStaff(Staff staff) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -178,6 +182,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
             preparedStatement.executeUpdate();
 
+            return "Added Successfully";
 
         } catch (SQLException e) {
             throw new DaoException("findAllStaffSet() " + e.getMessage());
@@ -201,6 +206,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
     /*Find by Filter*/
     @Override
+    /**Using DB Query - Order By*/
     public List<Staff> findStaffUsingFilterWorkHour() throws DaoException {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -247,6 +253,29 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
     }
 
     @Override
+    /**Using Comparator - StaffWorkHoursComparator*/
+    public List<Staff> findStaffUsingFilterWorkHourComparator() throws DaoException {
+
+        List<Staff> staffList = findAllStaff();
+        StaffWorkHoursComparator workHourComparator = new StaffWorkHoursComparator(SortType.Ascending);
+        Collections.sort( staffList, workHourComparator);
+
+        return staffList;
+    }
+    @Override
+    /**Using Comparator - StaffFirstNameComparator*/
+    public List<Staff> findStaffUsingFilterFirstNameComparator() throws DaoException {
+
+        List<Staff> staffList = findAllStaff();
+        StaffFirstNameComparator firstNameComp = new StaffFirstNameComparator();
+        Collections.sort( staffList, firstNameComp);
+
+        return staffList;
+    }
+
+
+    @Override
+    /**Using DB Query - Order By*/
     public List<Staff> findStaffUsingFilterFirstName() throws DaoException {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -292,23 +321,24 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
         return staffList;     // may be empty
     }
 
-    public void findAllStaffJSON(){
+    public String findAllStaffJSON(){
         System.out.println("All Staff as JSON String: ");
         try {
             List<Staff> staffList = findAllStaff();
-            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();;
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
                 String StaffJSON = gsonParser.toJson(staffList);
 
-                System.out.println(StaffJSON);
+                return StaffJSON;
 
         }catch ( DaoException e )
         {
             e.printStackTrace();
         }
+        return "Error cannot Parse to JSON";
 
     }
 
-    public void findStaffbyIDJSON(int id){
+    public String findStaffbyIDJSON(int id){
 
         try{
 
@@ -324,21 +354,23 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             System.out.println("Staff with id "+id+" as a JSON String: ");
         }
 
-        Gson gsonParser = new Gson();
+        Gson gsonParser =  new GsonBuilder().setPrettyPrinting().create();
         for(Staff s: staffList){
             if(s.getStaff_id()==id) {
                 StaffJSON = gsonParser.toJson(s);
             }
         }
 
-
-        System.out.println(StaffJSON);
+        return StaffJSON;
         }
         catch( DaoException e )
         {
             e.printStackTrace();
         }
+        return "Error cannot Parse to JSON";
 
     }
+
+
 
 }

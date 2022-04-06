@@ -100,17 +100,12 @@ public class Server
 
                     if (message.startsWith("DisplayById"))
                     {
-
+                        String[] tokens = message.split(" ");
+                        int id = Integer.parseInt(tokens[1]);
                         try {
-                            String[] tokens = message.split(" ");
-                            int id = Integer.parseInt(tokens[1]);
-                            if(IStaffDao.findStaffbyID(id)!=null) {
-                                IStaffDao.findStaffbyIDJSONoFormatting(id);
-                                socketWriter.println(IStaffDao.findStaffbyIDJSONoFormatting(id));
-                            }
-                            else{
-                                socketWriter.println("Staff with id "+id+" doesnt exist.");
-                            }
+
+                            IStaffDao.findStaffbyIDJSONoFormatting(id);
+                            socketWriter.println(IStaffDao.findStaffbyIDJSONoFormatting(id));
                         }
                         catch( DaoException e )
                         {

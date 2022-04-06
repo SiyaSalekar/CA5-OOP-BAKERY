@@ -53,10 +53,15 @@ public class Client
                 else if(command.startsWith("DisplayById")){
                     Gson gsonParser = new Gson();
                     String input = socketReader.nextLine();
-                    Staff outputClass = gsonParser.fromJson(input, Staff.class);
-                    String output = outputClass.toString();
-                    System.out.println("Client message: Response from server: ");
-                    System.out.println(output);
+                    try {
+                        Staff outputClass = gsonParser.fromJson(input, Staff.class);
+                        String output = outputClass.toString();
+                        System.out.println("Client message: Response from server: ");
+                        System.out.println(output);
+                    }
+                    catch (IllegalStateException | NullPointerException e){
+                        System.out.println("Staff doesnt exist - Sorry!");
+                    }
                 }
                 else if(command.startsWith("DeleteById")){
                     String output = socketReader.nextLine();

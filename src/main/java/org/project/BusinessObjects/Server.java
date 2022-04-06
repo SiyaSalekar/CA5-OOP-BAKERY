@@ -100,11 +100,17 @@ public class Server
 
                     if (message.startsWith("DisplayById"))
                     {
-                        String[] tokens = message.split(" ");
-                        int id = Integer.parseInt(tokens[1]);
+
                         try {
-                            IStaffDao.findStaffbyIDJSONoFormatting(id);
-                            socketWriter.println(IStaffDao.findStaffbyIDJSONoFormatting(id));
+                            String[] tokens = message.split(" ");
+                            int id = Integer.parseInt(tokens[1]);
+                            if(IStaffDao.findStaffbyID(id)!=null) {
+                                IStaffDao.findStaffbyIDJSONoFormatting(id);
+                                socketWriter.println(IStaffDao.findStaffbyIDJSONoFormatting(id));
+                            }
+                            else{
+                                socketWriter.println("Staff with id "+id+" doesnt exist.");
+                            }
                         }
                         catch( DaoException e )
                         {
@@ -133,8 +139,33 @@ public class Server
                             String email = tokens[4];
                             int work_hours = Integer.parseInt(tokens[5]);
                             double pay = Double.parseDouble(tokens[6]);
-                            IStaffDao.addStaff(new Staff(id,first_name,last_name,pay,work_hours,email));
-                            socketWriter.println("added");
+                            if(IStaffDao.findStaffbyID(id)==null) {
+                                IStaffDao.addStaff(new Staff(id, first_name, last_name, pay, work_hours, email));
+                                socketWriter.println("Staff Added Successfully");
+                            }
+                            else{
+                                socketWriter.println("Duplicate ID "+id+" cannot add");
+                            }
+                        }
+                        catch( DaoException e )
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    else if(message.startsWith("DeleteStaffById")){
+
+
+                        try {
+                            String[] tokens = message.split(" ");
+                            int id = Integer.parseInt(tokens[1]);
+                            if(IStaffDao.findStaffbyID(id)!=null) {
+                                IStaffDao.deleteById(id);
+                                socketWriter.println("Staff " + id + " deleted Successfully");
+                            }
+                            else{
+                                socketWriter.println("Staff with id "+id+" doesnt exist.");
+                            }
                         }
                         catch( DaoException e )
                         {
@@ -144,7 +175,7 @@ public class Server
                     }
                     else
                     {
-                        socketWriter.println("I'm sorry I don't understand :(");
+                        socketWriter.println("Invalid Command");
                     }
                 }
 

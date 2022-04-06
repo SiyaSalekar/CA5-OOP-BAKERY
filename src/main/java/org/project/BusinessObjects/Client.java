@@ -41,12 +41,7 @@ public class Client
 
             boolean contd = true;
             while(contd) {
-                if (command.startsWith("Time"))   //we expect the server to return a time
-                {
-                    String timeString = socketReader.nextLine();
-                    System.out.println("Client message: Response from server Time: " + timeString);
-                }                           // the user has entered the Echo command or an invalid command
-                else  if(command.startsWith("DisplayAll")){
+                if(command.startsWith("DisplayAll")){
                     Gson gsonParser = new Gson();
                     String input = socketReader.nextLine();
                     Staff[] staffArr = gsonParser.fromJson(input, Staff[].class);
@@ -62,6 +57,10 @@ public class Client
                     String output = outputClass.toString();
                     System.out.println("Client message: Response from server: ");
                     System.out.println(output);
+                }
+                else if(command.startsWith("DeleteById")){
+                    String output = socketReader.nextLine();
+                    System.out.println("Client message: Response from server: "+output);
                 }
                 else if(command.startsWith("AddStaff")){
                     String input = socketReader.nextLine();

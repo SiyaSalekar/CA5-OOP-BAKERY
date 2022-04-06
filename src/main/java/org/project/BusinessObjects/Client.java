@@ -29,7 +29,7 @@ public class Client
 
             System.out.println("Client message: The Client is running and has connected to the server");
 
-            System.out.println("Please enter a command:  (\"Time\" to get time, or \"Echo message\" to get echo, or \"Triple number\" to get triple) \n>");
+            System.out.println("\nPlease enter a command:  \n \"DisplayById\" to get staff by Id \n \"DisplayAll\" to get all staff \n \"AddStaff\" to add staff \n \"DeleteStaffById\" to delete staff by Id\n>");
             String command = in.nextLine();
 
             OutputStream os = socket.getOutputStream();
@@ -69,7 +69,7 @@ public class Client
                     System.out.println("Client message: Response from server: \"" + input + "\"");
                 }
 
-                System.out.println("Please enter a command:  (\"Time\" to get time, or \"Echo message\" to get echo, or \"Triple number\" to get triple) \n>");
+                System.out.println("\nPlease enter a command:  \n \"DisplayById\" to get staff by Id \n \"DisplayAll\" to get all staff \n \"AddStaff\" to add staff \n \"DeleteStaffById\" to delete staff by Id \n>");
                 command = in.nextLine();
                 socketWriter.println(command); //println very important - otherwise takes in all characters before \n
 

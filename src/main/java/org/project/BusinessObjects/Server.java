@@ -2,6 +2,7 @@ package org.project.BusinessObjects;
 
 import org.project.DAO.MySqlStaffDAO;
 import org.project.DAO.StaffDAOInterface;
+import org.project.DTO.Staff;
 import org.project.Exceptions.DaoException;
 
 import java.io.BufferedReader;
@@ -121,13 +122,25 @@ public class Server
                             e.printStackTrace();
                         }
                     }
-                    else if(message.startsWith("Triple")){
-//                      res = Integer.parseInt(message.substring(7))*3;
-//                      socketWriter.println(res);
-                        String[] tokens = message.split(" ");
-                        int num = Integer.parseInt(tokens[1]);
-                        num = num*3;
-                        socketWriter.println(num);
+                    else if(message.startsWith("AddStaff")){
+
+
+                        try {
+                            String[] tokens = message.split(" ");
+                            int id = Integer.parseInt(tokens[1]);
+                            String first_name = tokens[2];
+                            String last_name = tokens[3];
+                            String email = tokens[4];
+                            int work_hours = Integer.parseInt(tokens[5]);
+                            double pay = Double.parseDouble(tokens[6]);
+                            IStaffDao.addStaff(new Staff(id,first_name,last_name,pay,work_hours,email));
+                            socketWriter.println("added");
+                        }
+                        catch( DaoException e )
+                        {
+                            e.printStackTrace();
+                        }
+
                     }
                     else
                     {

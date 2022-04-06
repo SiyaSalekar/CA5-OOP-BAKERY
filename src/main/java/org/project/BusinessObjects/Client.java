@@ -63,6 +63,11 @@ public class Client
                     System.out.println("Client message: Response from server: ");
                     System.out.println(output);
                 }
+                else if(command.startsWith("AddStaff")){
+                    String input = socketReader.nextLine();
+                    System.out.println("Client message: Response from server: "+input);
+                }
+
                 else
                 {
                     String input = socketReader.nextLine();
@@ -75,6 +80,7 @@ public class Client
 
 
             }
+
             socketWriter.close();
             socketReader.close();
             socket.close();

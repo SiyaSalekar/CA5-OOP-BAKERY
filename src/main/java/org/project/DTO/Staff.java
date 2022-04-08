@@ -12,22 +12,6 @@ public class Staff implements Comparable<Staff>{
     private String email;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Staff staff = (Staff) o;
-        return staff_id == staff.staff_id && Double.compare(staff.rate_per_hour, rate_per_hour) == 0 && work_hours == staff.work_hours && Objects.equals(first_name, staff.first_name) && Objects.equals(last_name, staff.last_name) && Objects.equals(email, staff.email);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int hash = 5;
-        hash = 89 * hash + this.staff_id;
-        return hash;
-    }
-
-    @Override
     public int compareTo(Staff s)
     {
         boolean bSameFirst =
@@ -51,6 +35,19 @@ public class Staff implements Comparable<Staff>{
             return this.getLast_name().compareToIgnoreCase(
                     s.getLast_name());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Staff staff = (Staff) o;
+        return staff_id == staff.staff_id && Double.compare(staff.rate_per_hour, rate_per_hour) == 0 && work_hours == staff.work_hours && Objects.equals(first_name, staff.first_name) && Objects.equals(last_name, staff.last_name) && Objects.equals(email, staff.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(staff_id, first_name, rate_per_hour, last_name, work_hours, email);
     }
 
     public Staff(int staff_id, String first_name, String last_name, double rate_per_hour , int work_hours, String email){

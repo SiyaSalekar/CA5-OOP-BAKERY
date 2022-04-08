@@ -433,11 +433,11 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             double count =0;
             double avg = 0;
             for(Staff s: staffList){
-                total += s.getRate_per_hour();
+                total += s.getRate_per_hour()*s.getWork_hours();
                 count++;
             }
             avg = total/count;
-            res.put("Average Salary of Staff",avg);
+            res.put("AVERAGE SALARY of Staff",avg);
 
             //standard deviation
             double sub=0;
@@ -445,12 +445,12 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
             double subTotal=0;
             double subCount=0;
             for(Staff s:staffList){
-                sub = (Math.abs(s.getRate_per_hour()-avg))*(Math.abs(s.getRate_per_hour()-avg));
+                sub = Math.abs(((s.getRate_per_hour()*s.getWork_hours())-avg)*((s.getRate_per_hour()*s.getWork_hours())-avg));
                 subTotal+=sub;
                 subCount++;
             }
             standardDeviation = Math.sqrt(subTotal/subCount);
-            res.put("Standard Deviation of Salaries",standardDeviation);
+            res.put("STANDARD DEVIATION of Salaries",standardDeviation);
 
             //total salary earned by each Staff
             for(Staff s:staffList){

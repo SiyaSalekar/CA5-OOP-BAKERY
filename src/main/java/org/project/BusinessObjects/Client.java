@@ -9,9 +9,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -83,9 +82,15 @@ public class Client
                 else if(command.startsWith("Summary")) {
                     String input = socketReader.nextLine();
                     ObjectMapper mapper = new ObjectMapper();
-                    HashMap<String, String> map = mapper.readValue(input, HashMap.class);
+                    LinkedHashMap<String, Double> map = mapper.readValue(input, LinkedHashMap.class);
                     System.out.println("Client message: Response from server -> Summary Data : ");
-                    System.out.println(map);
+                    String key;
+                    Double value;
+                    for (Map.Entry<String, Double> entry : map.entrySet()) {
+                        key = entry.getKey();
+                        value = entry.getValue();
+                        System.out.println(key + ": "+value);
+                    }
                     break;
                 }
                 else

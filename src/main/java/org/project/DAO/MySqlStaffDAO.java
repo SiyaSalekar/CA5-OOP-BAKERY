@@ -454,7 +454,7 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
             //total salary earned by each Staff
             for(Staff s:staffList){
-                res.put("Total Salary of "+s.getFirst_name()+" "+s.getLast_name(),s.getWork_hours()*s.getRate_per_hour());
+                res.put("total Salary of "+s.getFirst_name()+" "+s.getLast_name(),s.getWork_hours()*s.getRate_per_hour());
             }
 
             Gson gsonParser = new Gson();

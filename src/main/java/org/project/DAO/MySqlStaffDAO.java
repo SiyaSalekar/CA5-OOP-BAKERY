@@ -423,6 +423,50 @@ public class MySqlStaffDAO extends MySqlDAO implements StaffDAOInterface {
 
     }
 
+    public String summaryDataJSON(){
+        String JSONRes="";
+        HashMap<String,Double> res = new HashMap<>();
+        try {
+            //average salary
+            List<Staff> staffList = findAllStaff();
+            double total =0;
+            double count =0;
+            double avg = 0;
+            for(Staff s: staffList){
+                total += s.getRate_per_hour();
+                count++;
+            }
+            avg = total/count;
+            res.put("Average Salary of Staff",avg);
+
+            //standard deviation
+            double sub=0;
+            double standardDeviation =0;
+            double subTotal=0;
+            double subCount=0;
+            for(Staff s:staffList){
+                sub = (Math.abs(s.getRate_per_hour()-avg))*(Math.abs(s.getRate_per_hour()-avg));
+                subTotal+=sub;
+                subCount++;
+            }
+            standardDeviation = Math.sqrt(subTotal/subCount);
+            res.put("Standard Deviation of Salaries",standardDeviation);
+
+            //total salary earned by each Staff
+            for(Staff s:staffList){
+                res.put("Total Salary of "+s.getFirst_name()+" "+s.getLast_name(),s.getWork_hours()*s.getRate_per_hour());
+            }
+
+            Gson gsonParser = new Gson();
+            JSONRes = gsonParser.toJson(res);
+
+        }catch ( DaoException e )
+        {
+            e.printStackTrace();
+        }
+        return JSONRes;
+    }
+
 
 
 }

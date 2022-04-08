@@ -2,6 +2,7 @@ package org.project.BusinessObjects;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.project.DTO.Staff;
 
 import java.io.IOException;
@@ -9,7 +10,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class Client
 {
@@ -74,6 +78,14 @@ public class Client
                 else if(command.startsWith("Quit")) {
                     String input = socketReader.nextLine();
                     System.out.println("Client message: Response from server: "+input);
+                    break;
+                }
+                else if(command.startsWith("Summary")) {
+                    String input = socketReader.nextLine();
+                    ObjectMapper mapper = new ObjectMapper();
+                    HashMap<String, String> map = mapper.readValue(input, HashMap.class);
+                    System.out.println("Client message: Response from server -> Summary Data : ");
+                    System.out.println(map);
                     break;
                 }
                 else

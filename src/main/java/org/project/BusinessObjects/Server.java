@@ -148,6 +148,10 @@ public class Server
                         }
 
                     }
+                    else if(message.startsWith("Quit")){
+                        socketWriter.println("Exiting Application");
+                        break;
+                    }
                     else if(message.startsWith("DeleteStaffById")){
 
 

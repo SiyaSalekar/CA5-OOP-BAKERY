@@ -29,7 +29,7 @@ public class Client
 
             System.out.println("Client message: The Client is running and has connected to the server");
 
-            System.out.println("\nPlease enter a command:  \n \"DisplayById\" to get staff by Id \n \"DisplayAll\" to get all staff \n \"AddStaff\" to add staff \n \"DeleteStaffById\" to delete staff by Id\n>");
+            System.out.println("\nPlease enter a command:  \n \"DisplayById\" to get staff by Id \n \"DisplayAll\" to get all staff \n \"AddStaff\" to add staff \n \"DeleteStaffById\" to delete staff by Id\n \"Quit\" to quit application\n>");
             String command = in.nextLine();
 
             OutputStream os = socket.getOutputStream();
@@ -71,7 +71,11 @@ public class Client
                     String input = socketReader.nextLine();
                     System.out.println("Client message: Response from server: "+input);
                 }
-
+                else if(command.startsWith("Quit")) {
+                    String input = socketReader.nextLine();
+                    System.out.println("Client message: Response from server: "+input);
+                    break;
+                }
                 else
                 {
                     String input = socketReader.nextLine();

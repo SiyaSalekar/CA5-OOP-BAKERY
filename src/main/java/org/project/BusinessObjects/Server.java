@@ -90,40 +90,32 @@ public class Server
         @Override
         public void run()
         {
+            try {
+
             String message;
             int res;
-            try
-            {
-                while ((message = socketReader.readLine()) != null)
-                {
+            try {
+                while ((message = socketReader.readLine()) != null) {
                     System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
 
-                    if (message.startsWith("DisplayById"))
-                    {
+                    if (message.startsWith("DisplayById")) {
                         String[] tokens = message.split(" ");
                         int id = Integer.parseInt(tokens[1]);
                         try {
 
                             IStaffDao.findStaffbyIDJSONoFormatting(id);
                             socketWriter.println(IStaffDao.findStaffbyIDJSONoFormatting(id));
-                        }
-                        catch( DaoException e )
-                        {
+                        } catch (DaoException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if (message.startsWith("DisplayAll"))
-                    {
+                    } else if (message.startsWith("DisplayAll")) {
                         try {
                             IStaffDao.findAllStaffJSONNoFormatting();
                             socketWriter.println(IStaffDao.findAllStaffJSONNoFormatting());
-                        }
-                        catch( DaoException e )
-                        {
+                        } catch (DaoException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(message.startsWith("AddStaff")){
+                    } else if (message.startsWith("AddStaff")) {
 
 
                         try {
@@ -134,59 +126,49 @@ public class Server
                             String email = tokens[4];
                             int work_hours = Integer.parseInt(tokens[5]);
                             double pay = Double.parseDouble(tokens[6]);
-                            if(IStaffDao.findStaffbyID(id)==null) {
+                            if (IStaffDao.findStaffbyID(id) == null) {
                                 IStaffDao.addStaff(new Staff(id, first_name, last_name, pay, work_hours, email));
                                 socketWriter.println("Staff Added Successfully");
+                            } else {
+                                socketWriter.println("Duplicate ID " + id + " cannot add");
                             }
-                            else{
-                                socketWriter.println("Duplicate ID "+id+" cannot add");
-                            }
-                        }
-                        catch( DaoException e )
-                        {
+                        } catch (DaoException e) {
                             e.printStackTrace();
                         }
 
-                    }
-                    else if(message.startsWith("Quit")){
+                    } else if (message.startsWith("Quit")) {
                         socketWriter.println("Exiting Application");
                         break;
-                    }
-                    else if(message.startsWith("Summary")){
+                    } else if (message.startsWith("Summary")) {
                         try {
                             IStaffDao.summaryDataJSON();
                             socketWriter.println(IStaffDao.summaryDataJSON());
-                        }
-                        catch( DaoException e )
-                        {
+                        } catch (DaoException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(message.startsWith("DeleteStaffById")){
+                    } else if (message.startsWith("DeleteStaffById")) {
 
 
                         try {
                             String[] tokens = message.split(" ");
                             int id = Integer.parseInt(tokens[1]);
-                            if(IStaffDao.findStaffbyID(id)!=null) {
+                            if (IStaffDao.findStaffbyID(id) != null) {
                                 IStaffDao.deleteById(id);
                                 socketWriter.println("Staff " + id + " deleted Successfully");
+                            } else {
+                                socketWriter.println("Staff with id " + id + " doesnt exist.");
                             }
-                            else{
-                                socketWriter.println("Staff with id "+id+" doesnt exist.");
-                            }
-                        }
-                        catch( DaoException e )
-                        {
+                        } catch (DaoException e) {
                             e.printStackTrace();
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         socketWriter.println("Invalid Command");
                     }
                 }
+            }catch (Exception e){
+                socketWriter.println("Invalid Command");
+            }
 
                 socket.close();
 

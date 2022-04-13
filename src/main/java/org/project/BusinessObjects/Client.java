@@ -42,18 +42,18 @@ public class Client
 
             Scanner socketReader = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
 
+            try{
             boolean contd = true;
             while(contd) {
-                if(command.startsWith("DisplayAll")){
+                if (command.startsWith("DisplayAll")) {
                     Gson gsonParser = new Gson();
                     String input = socketReader.nextLine();
                     Staff[] staffArr = gsonParser.fromJson(input, Staff[].class);
                     System.out.println("Client message: Response from server -> Staff array : ");
-                    for(Staff s : staffArr)
+                    for (Staff s : staffArr)
                         System.out.println(s);
 
-                }
-                else if(command.startsWith("DisplayById")){
+                } else if (command.startsWith("DisplayById")) {
                     Gson gsonParser = new Gson();
                     String input = socketReader.nextLine();
                     try {
@@ -61,25 +61,20 @@ public class Client
                         String output = outputClass.toString();
                         System.out.println("Client message: Response from server: ");
                         System.out.println(output);
-                    }
-                    catch (IllegalStateException | NullPointerException e){
+                    } catch (IllegalStateException | NullPointerException e) {
                         System.out.println("Staff doesnt exist - Sorry!");
                     }
-                }
-                else if(command.startsWith("DeleteById")){
+                } else if (command.startsWith("DeleteById")) {
                     String output = socketReader.nextLine();
-                    System.out.println("Client message: Response from server: "+output);
-                }
-                else if(command.startsWith("AddStaff")){
+                    System.out.println("Client message: Response from server: " + output);
+                } else if (command.startsWith("AddStaff")) {
                     String input = socketReader.nextLine();
-                    System.out.println("Client message: Response from server: "+input);
-                }
-                else if(command.startsWith("Quit")) {
+                    System.out.println("Client message: Response from server: " + input);
+                } else if (command.startsWith("Quit")) {
                     String input = socketReader.nextLine();
-                    System.out.println("Client message: Response from server: "+input);
+                    System.out.println("Client message: Response from server: " + input);
                     break;
-                }
-                else if(command.startsWith("Summary")) {
+                } else if (command.startsWith("Summary")) {
                     String input = socketReader.nextLine();
                     ObjectMapper mapper = new ObjectMapper();
                     HashMap<String, Double> map = mapper.readValue(input, HashMap.class);
@@ -89,11 +84,9 @@ public class Client
                     for (Map.Entry<String, Double> entry : map.entrySet()) {
                         key = entry.getKey();
                         value = entry.getValue();
-                        System.out.printf("%10s: %2.3f\n",key,value);
+                        System.out.printf("%10s: %2.3f\n", key, value);
                     }
-                }
-                else
-                {
+                } else {
                     String input = socketReader.nextLine();
                     System.out.println("Client message: Response from server: \"" + input + "\"");
                 }
@@ -102,7 +95,9 @@ public class Client
                 command = in.nextLine();
                 socketWriter.println(command); //println very important - otherwise takes in all characters before \n
 
-
+            }
+            }catch(Exception e){
+                socketWriter.println("Invalid Input");
             }
 
             socketWriter.close();

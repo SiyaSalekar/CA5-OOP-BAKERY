@@ -167,5 +167,29 @@ public class AppTest
 
     }
 
+    /** Client Server Tests*/
+    @Test
+    public void DisplayByIdClientServerTest()
+    {
+        String res = "";
+        String test = "Deleted Successfully";
+        System.out.println("Test 6 - deleteStaffByID()");
+        int id = 5;
+
+
+        StaffDAOInterface IStaffDao = new MySqlStaffDAO();
+
+        try {
+            res = IStaffDao.deleteById(id);
+        }catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+        assertEquals(res,test);
+
+    }
+
+
+
 
 }
